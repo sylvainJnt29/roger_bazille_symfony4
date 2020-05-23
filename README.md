@@ -13,8 +13,9 @@ note: Faire pareil pour Périscolaire, parents d'élèves et conseils d'école.
 
 
 
-Reste à faire : Gestion des utilisateurs
-              : Bdd opérationnelle
+Reste à faire : 
+* Gestion des utilisateurs
+* Bdd opérationnelle
 
 
 
