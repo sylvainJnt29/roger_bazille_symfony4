@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+<div class="container">
+    <h1 class="my-5 text-center">Les articles des professeurs :</h1>
+        <div class="row">
+               {% for actu in actuProf %}
+                   <div class="col-md-4 mt-4">
+                        <div class="card profile-card-5">
+                            <div class="card-img-block">
+                                <img class="card-img-top" src="{{ actu.image }}" alt="image article professeurs"/>
+                            </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{ actu.titre }}
+                                    </h5>
+
+                                <h5 class="card-date">
+                                    {{ actu.date|date("m/d/Y") }}
+                        
+                                </h5>
+                                <p class="card-text">
+                                    {{ actu.article}}
+                                </p>
+        
+</div>
+</div>
+</div>
+
+
+                {% endfor %}
+    
+
+
+
+
+{% endblock %}
+
+
+ 

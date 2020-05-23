@@ -1,0 +1,78 @@
+<nav class="navbar navbar-expand-lg  navbar-dark bg-primary ">
+  <a class="navbar-brand" href="{{ path('home') }}">Ecole Roger Bazille</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto ">
+      <li class="nav-item active">
+      
+        <a class="nav-link" href="{{ path('home') }}">
+            <i class="fas fa-home"></i>
+            Accueil 
+        </a>
+      </li>
+      <!--
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{ path('ecole') }}"  id="navbarDropdown" role="link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ecole
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{{ path('ecole') }}">Actualités des professeurs</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Espace professeurs</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{ path('periscolaire') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Périscolaire
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{ path('ecole') }}">Cantine</a>
+          <a class="dropdown-item" href="{{ path('periscolaire') }}">Accueil Périscolaire</a>
+          <a class="dropdown-item" href="{{ path('ecole') }}">T.A.P</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ path('ecole') }}">Espace mairie</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{ path('parents_eleves') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Parents d'élèves
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{ path('parents_eleves') }}">Actualités des parents d'élèves</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ path('ecole') }}">Espace parents d'élèves</a>
+        </div>
+      </li>
+
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{ path('conseil_ecole') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Conseil d'école
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{ path('conseil_ecole') }}">Actualités du conseil d'école</a>
+          <a class="dropdown-item" href="{{ path('ecole') }}">Vos questions</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ path('ecole') }}">Espace délégués des parents d'élèves</a>
+        </div>
+        
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ path('infos_pratiques') }}">Infos pratiques</a>
+        
+      </li>
+
+
+
+    </ul>
+  </div>
+</nav>

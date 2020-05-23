@@ -1,0 +1,23 @@
+#navContent{
+    display: flex;
+    justify-content:space-evenly;
+    background-color:rgba(0, 0, 0, 0.185);
+    border-top: solid black 2px;
+
+
+
+}
+#navContent a{
+
+    display: flex;
+    border: 1px black solid;
+    text-decoration: none;
+    padding: 10px;
+  
+}
+#navTitle{
+    background: url("../../public/img/banniere_header.jpg");
+    position: sticky;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
