@@ -52,6 +52,11 @@ class Menu
      */
     private $tarif_passager;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="menu")
+     */
+    private $utilisateur;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,7 +127,7 @@ class Menu
         return $this->tarif_abonne;
     }
 
-    public function setTarifAbonne(string $tarif_abonne): self
+    public function setTarifAbonne(float $tarif_abonne): self
     {
         $this->tarif_abonne = $tarif_abonne;
 
@@ -134,9 +139,21 @@ class Menu
         return $this->tarif_passager;
     }
 
-    public function setTarifPassager(string $tarif_passager): self
+    public function setTarifPassager(float $tarif_passager): self
     {
         $this->tarif_passager = $tarif_passager;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

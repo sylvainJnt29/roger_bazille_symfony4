@@ -2,13 +2,18 @@
 
 namespace App\Entity;
 
+
 use App\Repository\ReponseRepository;
 use Doctrine\ORM\Mapping as ORM;
+
+
+
+
 
 /**
  * @ORM\Entity(repositoryClass=ReponseRepository::class)
  */
-class Reponse
+class Reponse 
 {
     /**
      * @ORM\Id()
@@ -26,6 +31,16 @@ class Reponse
      * @ORM\Column(type="text")
      */
     private $reponse;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="reponse")
+     */
+    private $utilisateur;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Question::class, inversedBy="reponse", cascade={"persist", "remove"})
+     */
+    private $question;
 
     public function getId(): ?int
     {
@@ -55,4 +70,29 @@ class Reponse
 
         return $this;
     }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?question $question): self
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
 }

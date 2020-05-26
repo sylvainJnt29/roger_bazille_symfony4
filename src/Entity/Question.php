@@ -27,6 +27,16 @@ class Question
      */
     private $question;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="question")
+     */
+    private $utilisateur;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Reponse::class, mappedBy="question", cascade={"persist", "remove"})
+     */
+    private $reponse;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +62,36 @@ class Question
     public function setQuestion(string $question): self
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getReponse(): ?Reponse
+    {
+        return $this->reponse;
+    }
+
+    public function setReponse(?Reponse $reponse): self
+    {
+        $this->reponse = $reponse;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newQuestion = null === $reponse ? null : $this;
+        if ($reponse->getQuestion() !== $newQuestion) {
+            $reponse->setQuestion($newQuestion);
+        }
 
         return $this;
     }
