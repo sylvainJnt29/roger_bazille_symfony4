@@ -16,8 +16,53 @@
   
 }
 #navTitle{
-    background: url("../../public/img/banniere_header.jpg");
+    background: url("/public/img/banniere_header.jpg");
+    background-color: rgb(218, 127, 23);
     position: sticky;
     padding-top: 60px;
     padding-bottom: 60px;
 }
+#mep_infos{
+    display: flex;
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+
+
+}
+#mep_infos_gauche{
+
+   margin-left: 5%;
+
+}
+
+#mep_infos_droit{
+    padding-left: 5%;
+
+}
+#mep_milieu_droite_contact{
+    display: flex;
+   flex-direction: column;
+    padding-left: 5%;
+
+}
+main{
+    display: flex;
+    margin-top: 10%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 20%;
+    justify-content: space-between;
+}
+fieldset{
+    display: flex;
+    flex-direction: column;
+    border-style: groove;
+    border-radius: 8px;
+    background-color: rgba(213, 226, 228, 0.26);
+    padding-left: 250px;
+    padding-right: 250px;
+
+}
+
+
