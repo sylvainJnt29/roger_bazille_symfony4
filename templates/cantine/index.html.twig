@@ -1,19 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les menus de la cantine :{% endblock %}
+
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<!--{{dump(menus)}}-->
+<div class="container">
+    <h1 class="my-5 text-center">Les menus :</h1>
+        <div class="row">
+               {% for menu in menus %}
+                   <div class="col-md-4 mt-4">
+                        <div class="card profile-card-5">
+                            <div class="card-img-block">
+               
+                            </div>
+                                <div class="card-body">
+                                
 
-<div class="example-wrapper">
-   <h1>
-    Vous êtes sur la page d'accueil de la cantine
-   </h1>
-   <p>
-    Retrouvez nos délicieux menus concoctés avec soin par notre équipe !
-   </p>
+                                 <class="card-date">
+                                    Date de création du menu :
+                                    <h3>
+                                
+                                   {{ menu.date_creation_menu|date("jS F Y", "Europe/Paris")}}
+                                    </h3>
+                                    Date du repas :
+                                    <h3>
+                                    
+                                    {{ menu.date_service_menu|date("jS F Y", "Europe/Paris")}}
+                                    </h3>
+                        
+                                
+                                Entrée:
+                                    <p class="card-text">
+                                        {{ menu.entree }}
+                                    </p>
+                                Plat:
+                                    <p class="card-text">
+                                
+                                    {{ menu.plat}}
+                                </p>
+                                Dessert:
+                                <p class="card-text">
+                                    {{ menu.dessert}}
+                                </p>
+
+                               
+                               Tarif " abonné " : 
+                              <p class="card-text">
+                                    {{ menu.tarif_abonne}}
+                                    euros
+                                </p> 
+                                Tarif " passager " : 
+                                <p class="card-text">
+                                    {{ menu.tarif_passager}}
+                                    euros
+                                </p> 
+        
 </div>
+</div>
+</div>
+
+
+                {% endfor %}
+    
+
+
+
+
 {% endblock %}
+
+
+ 

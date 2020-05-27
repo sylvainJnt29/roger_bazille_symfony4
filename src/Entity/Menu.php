@@ -62,24 +62,24 @@ class Menu
         return $this->id;
     }
 
-    public function getDateCreationMenu(): ?\DateTimeInterface
+    public function getDate_creation_menu(): ?\DateTimeInterface
     {
         return $this->date_creation_menu;
     }
 
-    public function setDateCreationMenu(?\DateTimeInterface $date_creation_menu): self
+    public function setDdate_creation_menu(?\DateTimeInterface $date_creation_menu): self
     {
         $this->date_creation_menu = $date_creation_menu;
 
         return $this;
     }
 
-    public function getDateServiceMenu(): ?\DateTimeInterface
+    public function getDate_service_menu(): ?\DateTimeInterface
     {
         return $this->date_service_menu;
     }
 
-    public function setDateServiceMenu(\DateTimeInterface $date_service_menu): self
+    public function setDate_service_menu(\DateTimeInterface $date_service_menu): self
     {
         $this->date_service_menu = $date_service_menu;
 
@@ -122,24 +122,24 @@ class Menu
         return $this;
     }
 
-    public function getTarifAbonne(): ?float
+    public function getTarif_abonne(): ?float
     {
         return $this->tarif_abonne;
     }
 
-    public function setTarifAbonne(float $tarif_abonne): self
+    public function setTarif_abonne(float $tarif_abonne): self
     {
         $this->tarif_abonne = $tarif_abonne;
 
         return $this;
     }
 
-    public function getTarifPassager(): ?float
+    public function getTarif_passager(): ?float
     {
         return $this->tarif_passager;
     }
 
-    public function setTarifPassager(float $tarif_passager): self
+    public function setTarif_passager(float $tarif_passager): self
     {
         $this->tarif_passager = $tarif_passager;
 
