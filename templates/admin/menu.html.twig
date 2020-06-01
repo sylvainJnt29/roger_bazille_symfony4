@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+
+<div class="container-fluid">
+    <h1 class="my-5 text-center">
+        Les menus de la cantine :
+    </h1>
+    <div class="text-center mb-3">
+        <a href="{{ path('admin_menu_new')}}" class="btn btn-success text-white mb-3">
+            <i class="fas fa-plus"></i>
+            Créer nouveau menu
+        </a>    
+    </div>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>entree</th>
+                <th>Plat</th>
+                <th>Dessert</th>
+                <th>date de création du menu</th>
+                <th>date de service du menu</th>
+                <th>Tarif abonné</th>
+                <th>Tarif passager</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for menu in menus %}
+              <tr>
+                <td>{{ menu.id }}</td>
+                <td>{{ menu.entree }}</td>
+                <td>{{ menu.plat }}</td>
+                <td>{{ menu.dessert }}</td>
+                <td>{{ menu.date_creation_menu|date("jS F Y", "Europe/Paris")}}</td>
+                <td>{{ menu.date_service_menu|date("jS F Y", "Europe/Paris")}}</td>
+                <td>{{ menu.tarif_abonne }}</td>
+                <td>{{ menu.tarif_passager }}</td>
+
+                <td>
+                    <a href="{{ path('admin_menu_edit',{
+                        'id' : menu.id
+                    })}}" class="btn btn-warning">
+                        <i class="fas fa-edit"></i>
+                        Editer
+                    </a>
+                     <a href="{{ path('admin_menu_delete',{
+                         'id' : menu.id
+                     })}}" class="btn btn-danger">
+                        <i class="fas fa-trash"></i>
+
+                        Supprimer
+                    </a>
+                </td>
+
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
