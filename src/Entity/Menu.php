@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\MenuRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MenuRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=MenuRepository::class)
+ * @Vich\Uploadable
  */
 class Menu
 {
@@ -18,130 +22,73 @@ class Menu
     private $id;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="float")
      */
-    private $date_creation_menu;
-
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $date_service_menu;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $entree;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $plat;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $dessert;
+    private $tarifAbonne;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $tarif_abonne;
+    private $tarifPassager;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="string", length=255)
      */
-    private $tarif_passager;
+    private $carte_menu;
+
 
     /**
-     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="menu")
+     * @Vich\UploadableField(mapping="images_menus", fileNameProperty="carte_menu")
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="menus")
      */
     private $utilisateur;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDate_creation_menu(): ?\DateTimeInterface
+    public function getTarifAbonne(): ?float
     {
-        return $this->date_creation_menu;
+        return $this->tarifAbonne;
     }
 
-    public function setDdate_creation_menu(?\DateTimeInterface $date_creation_menu): self
+    public function setTarifAbonne(float $tarifAbonne): self
     {
-        $this->date_creation_menu = $date_creation_menu;
+        $this->tarifAbonne = $tarifAbonne;
 
         return $this;
     }
 
-    public function getDate_service_menu(): ?\DateTimeInterface
+    public function getTarifPassager(): ?float
     {
-        return $this->date_service_menu;
+        return $this->tarifPassager;
     }
 
-    public function setDate_service_menu(\DateTimeInterface $date_service_menu): self
+    public function setTarifPassager(float $tarifPassager): self
     {
-        $this->date_service_menu = $date_service_menu;
+        $this->tarifPassager = $tarifPassager;
 
         return $this;
     }
 
-    public function getEntree(): ?string
+    public function getCarteMenu(): ?string
     {
-        return $this->entree;
+        return $this->carte_menu;
     }
 
-    public function setEntree(string $entree): self
+    public function setCarteMenu(?string $carte_menu): self
     {
-        $this->entree = $entree;
-
-        return $this;
-    }
-
-    public function getPlat(): ?string
-    {
-        return $this->plat;
-    }
-
-    public function setPlat(string $plat): self
-    {
-        $this->plat = $plat;
-
-        return $this;
-    }
-
-    public function getDessert(): ?string
-    {
-        return $this->dessert;
-    }
-
-    public function setDessert(string $dessert): self
-    {
-        $this->dessert = $dessert;
-
-        return $this;
-    }
-
-    public function getTarif_abonne(): ?float
-    {
-        return $this->tarif_abonne;
-    }
-
-    public function setTarif_abonne(float $tarif_abonne): self
-    {
-        $this->tarif_abonne = $tarif_abonne;
-
-        return $this;
-    }
-
-    public function getTarif_passager(): ?float
-    {
-        return $this->tarif_passager;
-    }
-
-    public function setTarif_passager(float $tarif_passager): self
-    {
-        $this->tarif_passager = $tarif_passager;
+        $this->carte_menu = $carte_menu;
 
         return $this;
     }
@@ -154,6 +101,32 @@ class Menu
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+     public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+        
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

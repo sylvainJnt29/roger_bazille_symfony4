@@ -3,26 +3,22 @@
     justify-content:space-evenly;
     background-color:rgba(0, 0, 0, 0.185);
     border-top: solid black 2px;
-
-
-
 }
 #navContent a{
-
     display: flex;
     border: 1px black solid;
     text-decoration: none;
-    padding: 10px;
+
   
 }
 #navTitle{
-    background: url("/public/img/banniere_header.jpg");
+    background: url("/public/img/banniere_header.jpg")no-repeat center center fixed;
     background-color: rgb(218, 127, 23);
     position: sticky;
-    padding-top: 60px;
-    padding-bottom: 60px;
+
+    
 }
-#mep_infos{
+ #mep_infos{
     display: flex;
     margin-top: 5%;
     margin-bottom: 5%;
@@ -46,14 +42,7 @@
     padding-left: 5%;
 
 }
-main{
-    display: flex;
-    margin-top: 10%;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-bottom: 20%;
-    justify-content: space-between;
-}
+
 fieldset{
     display: flex;
     flex-direction: column;
@@ -63,6 +52,25 @@ fieldset{
     padding-left: 250px;
     padding-right: 250px;
 
+} 
+footer{
+
+    border-top:solid black 2px ;
+    background-color: rgba(23,162,184);
+    display: flex;
+    justify-content: space-around;
+    border-radius: 10%;
+    padding-top: 1%;
+   
+    margin-top: 10%;
 }
+footer a,p{
+    text-decoration: none;
+    font-size: 135%;
+ 
 
-
+}
+#navbar{
+    padding: 2%;
+    font-size: 135%;
+}

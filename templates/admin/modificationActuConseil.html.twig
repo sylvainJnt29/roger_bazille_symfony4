@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de l'actualité du conseil d'école !{% endblock %}
+
+
+
+
+
+{% block body %}
+
+
+{{form_start(form)}}
+
+    {{form_widget(form)}}
+    <a href="{{path('admin_conseil')}}" class="btn btn-primary">Retour</a>
+    <input type="submit" value="valider" class="btn btn-success">
+{{form_end(form)}}
+
+
+
+{% endblock %}

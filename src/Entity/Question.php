@@ -18,9 +18,9 @@ class Question
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date;
+    private $created_at;
 
     /**
      * @ORM\Column(type="text")
@@ -33,7 +33,7 @@ class Question
     private $utilisateur;
 
     /**
-     * @ORM\OneToOne(targetEntity=Reponse::class, mappedBy="question", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Reponse::class, inversedBy="question", cascade={"persist", "remove"})
      */
     private $reponse;
 
@@ -42,14 +42,14 @@ class Question
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->created_at;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
     {
-        $this->date = $date;
+        $this->created_at = $created_at;
 
         return $this;
     }
@@ -78,20 +78,14 @@ class Question
         return $this;
     }
 
-    public function getReponse(): ?Reponse
+    public function getReponse(): ?reponse
     {
         return $this->reponse;
     }
 
-    public function setReponse(?Reponse $reponse): self
+    public function setReponse(?reponse $reponse): self
     {
         $this->reponse = $reponse;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newQuestion = null === $reponse ? null : $this;
-        if ($reponse->getQuestion() !== $newQuestion) {
-            $reponse->setQuestion($newQuestion);
-        }
 
         return $this;
     }

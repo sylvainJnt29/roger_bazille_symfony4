@@ -3,94 +3,62 @@
 
 
 {% block body %}
+<h1 class="my-5 text-center">Retrouvez ici les articles du conseil d'école:</h1>
+{% for message in app.flashes('success') %}
+
+<div class="alert alert-success">
+    {{message}}
+</div>
+    
+{% endfor %}
+{% for actuConseil in actusConseil %}
 
 <div class="container">
-    <div class="my-5 ">
-    Règlement du Conseil d’école
-    <br>
-Conformément aux articles D 411-1 à 4 du Code de l’Éducation, le Conseil d’école est composé des membres suivants :
-<ul>
-<li> La directrice de l’école, Présidente</li>
-<li> Le Maire et/ou son représentant</li>
-<li> Un conseiller municipal</li>
-<li> Tous les enseignants de l’école</li>
-<li> Les représentants élus titulaires des parents d’élèves</li>
-<li> Le DDEN du secteur.</li>
-</ul>
-<p>Chacun de ces membres peut être amené à délibérer sur les points de l’ordre du jour.
-L’Inspecteur de l’Éducation Nationale de la circonscription assiste de droit aux réunions du Conseil d’école.
+    <div class="my-5 text-center">
+                                    {% if ROLE_ADMIN or ROLE_USER_CONSEIL  %}
 
-Le Conseil d’école doit réunir au moins la moitié de ses membres titulaires. En l’absence de ce quorum, le Conseil d’école ne peut se tenir. Une autre date sera alors proposée.
-
-La directrice peut inviter toute personne susceptible d’apporter un éclairage sur un point particulier de l’ordre du jour (personnels du réseau d’aides, médecin scolaire, ATSEM, animateurs périscolaire …)
-
-Les parents d’élèves suppléants peuvent assister aux réunions du Conseil d’école, sans participer aux débats ni aux votes, sauf s’ils siègent en remplacement d’un parent d’élève titulaire. Dans ce cas, ils jouissent des pleins droits du parent titulaire qu’ils remplacent.
-
-Le conseil d’école se réunit trois fois dans l’année (pour une durée totale de 6 heures). L’ouverture et la fermeture de la séance sont déclarées par la directrice qui établit l’ordre du jour. Le Conseil d’école peut être également convoqué à la demande du maire ou de la moitié au moins de ses membres.
-
-La directrice informe 15 jours avant la date prévue, de la tenue du Conseil d’école. Suite à un conseil des maîtres, elle fait une proposition d’ordre du jour. Chaque membre peut alors faire part des points qu’il souhaite voir évoquer ou ajouter à l’ordre du jour. Au moins 8 jours avant, le directeur adresse à chaque membre du conseil d’école une convocation mentionnant l’ordre du jour ainsi que, si nécessaire, les documents relatifs aux points inscrits.
-
-Les convocations sont adressées à l’ensemble des membres du Conseil d’École, titulaires et suppléants. Les documents ne sont adressés qu’aux membres titulaires. Il appartient à ces derniers, s’ils ne peuvent être présents, de les transmettre à leur suppléant.
-
-Le conseil d’école est :
-* Une instance de décision qui :
-– vote le règlement intérieur de l’école.
-– adopte le projet d’école préparé par l’équipe pédagogique,
-– peut établir un projet d’organisation de la semaine scolaire (soumis à la décision de l’Inspecteur d’Académie).
-* Une instance de consultation qui donne son avis sur :
-– le fonctionnement de l’école et sur toutes les questions concernant la vie de l’école.
-– les actions pédagogiques entreprises, projets d’action éducative.
-– l’utilisation des moyens alloués à l’école.
-– les conditions d’intégration d’enfants handicapés.
-– les activités périscolaires éducatives, sportives et culturelles.
-– la restauration scolaire, l’hygiène scolaire, la protection et la sécurité des élèves.
-* une instance d’information sur :
-– l’organisation pédagogique et la répartition des élèves, du matériel pédagogique.
-– l’organisation des aides spécialisées.
-– les conditions d’organisation des réunions et rencontres avec les parents d’élèves.
-
-Le conseil d’école doit être un lieu d’échanges constructifs autour de points visant à améliorer la qualité de vie de l’élève à l’école. Le conseil d’école n’est pas un lieu d’examen de situations particulières. Les représentants de parents s’engagent à représenter les autres parents d’élèves jusqu’aux élections de l’année scolaire prochaine. Une obligation de réserve absolue quant aux points évoqués mettant nommément en cause un élève, une famille ou toute autre personne est demandée.
-
-A chaque séance, un compte-rendu est adressé aux membres du Conseil d’école pour validation. Il est ensuite affiché sur le panneau d’information à l’école. Ce compte-rendu est consigné dans un registre spécial conservé à l’école.
-
-Le Conseil d’école est institué pour une année scolaire et siège jusqu’aux prochaines élections des représentants des parents d’élèves.
-
-Le présent règlement intérieur peut être modifié à la condition de l’accord d’au moins les 2/3 de ses membres présents lors de la délibération.</p>
-
-    </div>
-    <h1 class="my-5 text-center">Les articles du conseil d'école :</h1>
-        <div class="row">
-               {% for actu in actusConseil %}
-                   <div class="my-5 text-center">
+                                 <a href="{{path('creationActuConseil')}}" class="col btn btn-success">Ajouter une nouvelle actualite périscolaire</a>     
+                            {% endif %}
+          
+                    <div class="my-5 text-center">
                         <div class="card profile-card-5">
                             <div class="card-img-block">
-                                <img class="card-img-top" src="{{ actu.image }}" alt="image article conseil d'école"/>
+                                <img class="card-img-top" src="{{asset('images/docs/' ~ actuConseil.image)}}" alt="image article conseil"/>
                             </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        {{ actu.titre }}
-                                    </h5>
-
+                            <div class="card-body">
                                 <h5 class="card-date">
-                                    {{ actu.date|date("m/d/Y") }}
-                        
+                                    Date de l'article :
+                                {{actuConseil.createdAt|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y')}}
                                 </h5>
-                                <p class="card-text">
-                                    {{ actu.article}}
-                                </p>
-        
+                                 <h5 class="card-title">
+                                {{actuConseil.titre}}
+                                </h5>
+                                    <p class="card-text">
+                                {{actuConseil.article}}
+                                    </p>
+
+                            </div>
+                            {% if ROLE_ADMIN or ROLE_USER_CONSEIL  %}
+                                <div class="row no-gutters">
+                                    <a href="{{path('modificationActuConseil',{'id' : actuConseil.id})}}" class="col btn btn-warning">Modifier</a>
+                                    <form method="post" class="col" action="{{path('suppActuConseil',{'id':actuConseil.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer le menu?')">
+                                        <input type="hidden" name="_method" value="SUP">
+                                        <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ actuConseil.id)}}">
+                                        <input type="submit" class="btn btn-danger w-100" value="supprimer">
+                                    </form>
+                                </div>
+                            {% endif %}                    
+                                               
+                        </div> 
 </div>
 </div>
 </div>
 
 
-                {% endfor %}
-    
 
-
-
+{% endfor %}
+<div class="navigation">
+    {{ knp_pagination_render(actusConseil) }}
+</div>
 
 {% endblock %}
-
-
- 

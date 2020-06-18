@@ -1,25 +1,27 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Bienvenue !{% endblock %}
+
 
 
 {% block body %}
 
 
-
-<div class="container text-center">
-    <div class="jumbotron mt-5">
-        <h1>Bienvenue sur le site de l'école Roger Bazille !</h1>
-        <p class="lead">
-            Venez découvrir les derniers articles des professeurs, les menus, et bien plus ...
-        </p>
-        <hr class="my-5 ">
-        <p class="lead">
-        <a href="{{ path('ecole') }}" class="btn btn-primary" role="button">
-            <i class="fas fa-info-circle"></i>
-            Entrez
-        </a>
-        </p>
+<div id="img_fond_accueil">
+    <div class="container-text-center-pt-5">
+        <div class="jumbotron my-5">
+            <h1>Bienvenue sur le site de l'école Roger Bazille !</h1>
+            <p class="lead">
+                Venez découvrir les derniers articles des professeurs, les menus, et bien plus ...
+            </p>
+            <hr class="my-5">
+            <p class="lead">
+            <a href="{{path('ecole')}}" class="btn btn-primary" role="button">
+                <i class="fas fa-info-circle"></i>
+                Entrez
+            </a>
+            </p>
+    
     </div>
 </div>
-
 {% endblock %}

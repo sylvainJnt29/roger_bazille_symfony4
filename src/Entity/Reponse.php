@@ -2,18 +2,13 @@
 
 namespace App\Entity;
 
-
 use App\Repository\ReponseRepository;
 use Doctrine\ORM\Mapping as ORM;
-
-
-
-
 
 /**
  * @ORM\Entity(repositoryClass=ReponseRepository::class)
  */
-class Reponse 
+class Reponse
 {
     /**
      * @ORM\Id()
@@ -23,9 +18,9 @@ class Reponse
     private $id;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date;
+    private $created_at;
 
     /**
      * @ORM\Column(type="text")
@@ -38,7 +33,7 @@ class Reponse
     private $utilisateur;
 
     /**
-     * @ORM\OneToOne(targetEntity=Question::class, inversedBy="reponse", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Question::class, mappedBy="reponse", cascade={"persist", "remove"})
      */
     private $question;
 
@@ -47,14 +42,14 @@ class Reponse
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->created_at;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setCreatedAt(?\DateTimeInterface $created_at): self
     {
-        $this->date = $date;
+        $this->created_at = $created_at;
 
         return $this;
     }
@@ -83,16 +78,21 @@ class Reponse
         return $this;
     }
 
-    public function getQuestion(): ?question
+    public function getQuestion(): ?Question
     {
         return $this->question;
     }
 
-    public function setQuestion(?question $question): self
+    public function setQuestion(?Question $question): self
     {
         $this->question = $question;
 
+        // set (or unset) the owning side of the relation if necessary
+        $newReponse = null === $question ? null : $this;
+        if ($question->getReponse() !== $newReponse) {
+            $question->setReponse($newReponse);
+        }
+
         return $this;
     }
-
 }

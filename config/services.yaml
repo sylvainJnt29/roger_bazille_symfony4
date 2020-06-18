@@ -6,6 +6,17 @@
 parameters:
 
 services:
+    #    service_1:
+    #        ...    
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        public: false
+        tags:
+            - { name: twig.extension }
+
+
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

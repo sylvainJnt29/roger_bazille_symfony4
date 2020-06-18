@@ -1,0 +1,43 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        images_conseil:
+           uri_prefix: /images/conseil
+           upload_destination: '%kernel.project_dir%/public/images/conseil'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+     
+        images_docs:
+           uri_prefix: /images/docs
+           upload_destination: '%kernel.project_dir%/public/images/docs'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+     
+        images_menus:
+           uri_prefix: /images/menu
+           upload_destination: '%kernel.project_dir%/public/images/menu'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+    
+        images_parents:
+           uri_prefix: /images/parents
+           upload_destination: '%kernel.project_dir%/public/images/parents'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+    
+        images_periscolaire:
+           uri_prefix: /images/periscolaire
+           upload_destination: '%kernel.project_dir%/public/images/periscolaire'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+    
+        images_profs:
+           uri_prefix: /images/profs
+           upload_destination: '%kernel.project_dir%/public/images/profs'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+    
+        images_tap:
+           uri_prefix: /images/tap
+           upload_destination: '%kernel.project_dir%/public/images/tap'
+           namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

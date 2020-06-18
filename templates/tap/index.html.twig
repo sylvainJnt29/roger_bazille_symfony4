@@ -3,61 +3,61 @@
 
 
 {% block body %}
+<h1 class="my-5 text-center">Retrouvez ici les activités des Temps d'Activité Périscolaire :</h1>
+{% for message in app.flashes('success') %}
+
+<div class="alert alert-success">
+    {{message}}
+</div>
+    
+{% endfor %}
+{% for actuTap in actusTap %}
 
 <div class="container">
-    <h1 class="my-5 text-center">La page des T.A.P :</h1>
-        <div class="row">
-               {% for actu in tap %}
-                   <div class="my-5 text-center">
+    <div class="my-5 text-center">
+                                    {% if ROLE_ADMIN or ROLE_USER_MAIRIE  %}
+                                    
+                                    <a href="{{path('creationActuTap')}}" class="col btn btn-success">Ajouter un nouvel article</a>
+                            {% endif %}
+          
+                    <div class="my-5 text-center">
                         <div class="card profile-card-5">
                             <div class="card-img-block">
-                                <img class="card-img-top" src="{{ actu.image }}" alt="image article tap"/>
+                                <img class="card-img-top" src="{{asset('images/tap/' ~ actuTap.image)}}" alt="image article tap"/>
                             </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                    Classe concernée :
-                                        {{ actu.classe }}
-                                    </h5>
-
-                                 <p class="card-text my-3">
-                                Responsable :
-                                    {{ actu.responsable}}
-                                </p>
-                            
+                            <div class="card-body">
                                 <h5 class="card-date">
-                                    Article créé le :
-                                    {{ actu.dateCreationArticle|date("m/d/Y") }}
+                                    Date de l'article :
+                                {{actuTap.createdAt|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y')}}
                                 </h5>
-                                 <h5 class="card-date">
-                                    Date de début de l'activité :
-                                    {{ actu.dateDebutActivite|date("m/d/Y") }}
+                                 <h5 class="card-title">
+                                {{actuTap.titre}}
                                 </h5>
-                                 <h5 class="card-date">
-                                    Date de fin de l'activité :
-                                    {{ actu.dateFinActivite|date("m/d/Y") }}
-                                </h5>
-                            
-                                <p class="card-text my-3">
-                                Activité pratiquée :
-                                    {{ actu.activite}}
-                                </p>
-                                  <p class="card-text">
-                                Résumé de l'activité :
-                                    {{ actu.description}}
-                                </p>
-        
+                                    <p class="card-text">
+                                {{actuTap.article}}
+                                    </p>
+
+                            </div>
+                            {% if ROLE_ADMIN or ROLE_USER_MAIRIE  %}
+                                <div class="row no-gutters">
+                                    <a href="{{path('modificationActuTap',{'id' : actuTap.id})}}" class="col btn btn-warning">Modifier</a>
+                                    <form method="post" class="col" action="{{path('suppActuTap',{'id':actuTap.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer l\'article?')">
+                                        <input type="hidden" name="_method" value="SUP">
+                                        <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ actuTap.id)}}">
+                                        <input type="submit" class="btn btn-danger w-100" value="supprimer">
+                                    </form>
+                                </div>
+                            {% endif %}                       
+                        </div> 
 </div>
 </div>
 </div>
 
 
-                {% endfor %}
-    
 
-
-
+{% endfor %}
+<div class="navigation">
+    {{ knp_pagination_render(actusTap) }}
+</div>
 
 {% endblock %}
-
-
- 

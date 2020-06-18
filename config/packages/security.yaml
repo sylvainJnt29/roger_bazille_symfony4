@@ -1,30 +1,33 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
-        App\Entity\Admin:
-            algorithm: bcrypt
+        App\Entity\Utilisateur:
+            algorithm: auto
     providers:
         users_in_memory: { memory: null }
-        admin_login:
+        in_database:
             entity:
-                class: App\Entity\Admin
-                property: nom
+                class: App\Entity\Utilisateur
+                property: username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            pattern: ^/
             anonymous: true
-            provider: admin_login
-            form_login:
-                login_path: admin_login
-                check_path: admin_login
-                default_target_path: admin_actus
             
+            provider: in_database
+            form_login:
+                login_path: app_login
+                check_path: app_login
             logout:
-                path: admin_logout
+                path: app_logout
                 target: home
+            guard:
+                authenticators:
+                    - App\Security\AdminAuthenticator
+           
+        
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -35,7 +38,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/admin, roles: ROLE_ADMIN }
+         # - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/admin, roles: ['ROLE_ADMIN','ROLE_USER_PROF','ROLE_USER_MAIRIE','ROLE_USER_PARENT','ROLE_USER_CONSEIL'] }
 
-        # - { path: ^/profile, roles: ROLE_USER }
+         # - { path: ^/profile, roles: ROLE_USER }

@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<!--<?php echo $this->message ?>-->
+
 
 
 <div id="mep_infos">
@@ -12,7 +12,9 @@
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2666.3379456957396!2d0.1193054042264935!3d48.06511946699315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e2877400b377c5%3A0x4d7536de0ced6a39!2s3%20Rue%20de%20la%20Mairie%2C%2072650%20Aign%C3%A9!5e0!3m2!1sfr!2sfr!4v1588075781039!5m2!1sfr!2sfr" width="700" height="550" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
   </div>
 
-
+                        
+                         
+                               
 
 
   <div id="mep_milieu_droite_contact">
@@ -49,20 +51,13 @@
       Le Mercredi: 9h - 12h
     </p>
     <p>
-      <a href="download/reglement.pdf" download="reglement.pdf">Téléchargez le règlement intérieur</a>
+      <a href="{{asset('images/docs/règlement_interieur.pdf')}}">Téléchargez le règlement intérieur</a>
     </p>
     </div>
   </div>
   <div id="reponse_formulaire">
 
-  <?php
-          
-            if(isset($_SESSION['msg']))
-            {
-                echo $_SESSION['msg'];
-                unset($_SESSION['msg']);
-            }
-  ?>
+
 
 </div>
     </div>

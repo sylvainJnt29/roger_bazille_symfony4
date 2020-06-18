@@ -3,39 +3,61 @@
 
 
 {% block body %}
+<h1 class="my-5 text-center">Retrouvez ici les actualités des parents d'élèves :</h1>
+{% for message in app.flashes('success') %}
+
+<div class="alert alert-success">
+    {{message}}
+</div>
+    
+{% endfor %}
+{% for actuParent in actusParents %}
 
 <div class="container">
-    <h1 class="my-5 text-center">Retrouvez ici les articles des parents d'élèves :</h1>
-        <div class="row">
-               {% for actuParents in actuParentsEleves %}
+    <div class="my-5 text-center">
+                             {% if ROLE_ADMIN or ROLE_USER_PARENT  %}
+
+                                 <a href="{{path('creationActuParents')}}" class="col btn btn-success">Ajouter une nouvelle actualite périscolaire</a>     
+                            {% endif %}       
+          
                     <div class="my-5 text-center">
                         <div class="card profile-card-5">
                             <div class="card-img-block">
-                                <img class="card-img-top" src="{{ actuParents.image }}" alt="image article parents d'élèves"/>
+                                <img class="card-img-top" src="{{asset('images/docs/' ~ actuParent.image)}}" alt="image article tap"/>
                             </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        {{ actuParents.titre }}
-                                    </h5>
-
+                            <div class="card-body">
                                 <h5 class="card-date">
                                     Date de l'article :
-                                    {{ actuParents.date|date("m/d/Y") }}
-                        
+                                {{actuParent.createdAt|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y')}}
                                 </h5>
-                                <p class="card-text">
-                                    {{ actuParents.article}}
-                                </p>
-        
+                                 <h5 class="card-title">
+                                {{actuParent.titre}}
+                                </h5>
+                                    <p class="card-text">
+                                {{actuParent.article}}
+                                    </p>
+
+                            </div>
+                            {% if ROLE_ADMIN or ROLE_USER_PARENT  %}
+                                <div class="row no-gutters">
+                                    <a href="{{path('modificationActuParents',{'id' : actuParent.id})}}" class="col btn btn-warning">Modifier</a>
+                                    <form method="post" class="col" action="{{path('suppActuParents',{'id':actuParent.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer le menu?')">
+                                        <input type="hidden" name="_method" value="SUP">
+                                        <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ actuParent.id)}}">
+                                        <input type="submit" class="btn btn-danger w-100" value="supprimer">
+                                    </form>
+                                </div>
+                            {% endif %}                    
+                        </div> 
 </div>
 </div>
 </div>
 
 
-                {% endfor %}
-    
 
-
-
+{% endfor %}
+<div class="navigation">
+    {{ knp_pagination_render(actusParents) }}
+</div>
 
 {% endblock %}

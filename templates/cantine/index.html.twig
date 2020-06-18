@@ -1,72 +1,100 @@
 {% extends 'base.html.twig' %}
-
-
-
 {% block body %}
-<!--{{dump(menus)}}-->
-<div class="container">
-    <h1 class="my-5 text-center">Les menus :</h1>
-        <div class="row">
-               {% for menu in menus %}
-                   <div class="col-md-4 mt-4">
-                        <div class="card profile-card-5">
-                            <div class="card-img-block">
-               
-                            </div>
-                                <div class="card-body">
-                                
 
-                                 <class="card-date">
-                                    Date de création du menu :
-                                    <h3>
-                                
-                                   {{ menu.date_creation_menu|date("jS F Y", "Europe/Paris")}}
-                                    </h3>
-                                    Date du repas :
-                                    <h3>
-                                    
-                                    {{ menu.date_service_menu|date("jS F Y", "Europe/Paris")}}
-                                    </h3>
-                        
-                                
-                                Entrée:
-                                    <p class="card-text">
-                                        {{ menu.entree }}
-                                    </p>
-                                Plat:
-                                    <p class="card-text">
-                                
-                                    {{ menu.plat}}
-                                </p>
-                                Dessert:
-                                <p class="card-text">
-                                    {{ menu.dessert}}
-                                </p>
 
-                               
-                               Tarif " abonné " : 
-                              <p class="card-text">
-                                    {{ menu.tarif_abonne}}
-                                    euros
-                                </p> 
-                                Tarif " passager " : 
-                                <p class="card-text">
-                                    {{ menu.tarif_passager}}
-                                    euros
-                                </p> 
-        
+
+
+
+
+
+    <h1 class="my-5 text-center">Bienvenue sur la page de la cantine: </h1>
+<div id="prout">
+            <p class="my-2 text-center">
+                L’établissement travaille avec la société Océane de Restauration.
+                L’inscription à la cantine peut se faire de différentes manières: permanent ou au bordereau.
+                Une inscription ou une annulation est toujours possible la veille pour le lendemain.
+
+                <p class="lead">
+            <a href="{{asset('images/menu/menu.pdf')}}" class="btn btn-primary" role="button">
+                <i class="fas fa-info-circle"></i>
+                Cliquez ici pour obtenir
+                    le fichier PDF comprenant toutes les semaines de la période 3 !
+            </a>
+            
+
 </div>
-</div>
-</div>
+{% for message in app.flashes('success') %}
 
-
-                {% endfor %}
+<div class="alert alert-success">
+    {{message}}
+</div>
     
+{% endfor %}
+
+{% for menu in menus %}
+
+<div class="container">
+    <div class="my-5 text-center">
+                                  {% if ROLE_ADMIN or ROLE_USER_MAIRIE  %}
+
+                                 <a href="{{path('creationMenu')}}" class="col btn btn-success">Ajouter un nouveau menu</a>     
+                            {% endif %}          
+          
+                    <div class="my-5 text-center">
+                        
+                            <div class="card-body" id="tarif">
+                                
+                                 <h5 class="card-text">
+                                Tarif abonné:
+                                {{menu.tarifAbonne}} Euros.
+                                </h5>
+                                    <h5 class="card-text">
+                                Tarif passager:        
+                                {{menu.tarifPassager}} Euros.
+                                    </h5>
+                           
+                            </div>
+                            <div class="card profile-card-5">
+                            
+                                <img class="card-img-top" src="{{asset('images/menu/' ~ menu.cartemenu)}}" alt="image menu"/>
+                            </div>
+                                  {% if ROLE_ADMIN or ROLE_USER_MAIRIE  %}
+                                <div class="row no-gutters">
+                                    <a href="{{path('modificationMenu',{'id' : menu.id})}}" class="col btn btn-warning">Modifier</a>
+                                    <form method="post" class="col" action="{{path('suppMenu',{'id':menu.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer le menu?')">
+                                        <input type="hidden" name="_method" value="SUP">
+                                        <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ menu.id)}}">
+                                        <input type="submit" class="btn btn-danger w-100" value="supprimer">
+                                    </form>
+                                </div>
+                            {% endif %}          
+                        </div> 
+                          
+                    </div>
+          
+    </div>
 
 
+
+{% endfor %}
+
+
+
+<div class="navigation">
+    {{ knp_pagination_render(menus) }}
+</div>
+ 
 
 
 {% endblock %}
+
+
+ 
+
+
+
+
+
 
 
  

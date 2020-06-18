@@ -1,82 +1,34 @@
-<nav class="navbar navbar-expand-lg  navbar-dark bg-primary ">
-  <a class="navbar-brand" href="{{ path('home') }}">Ecole Roger Bazille</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<footer>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto ">
-      <li class="nav-item active">
-      
-        <a class="nav-link" href="{{ path('home') }}">
-            <i class="fas fa-home"></i>
-            Accueil 
-        </a>
-      </li>
-      <!--
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="{{ path('ecole') }}"  id="navbarDropdown" role="link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Ecole
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{ path('ecole') }}">Actualités des professeurs</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{ path('admin_login') }}">Espace professeurs</a>
-        </div>
-      </li>
+<div>
+<p>
+<a href="https://www.google.com/maps/place/3+Rue+de+la+Mairie,+72650+Aign%C3%A9/@48.0651081,0.117415,17z/data=!3m1!4b1!4m5!3m4!1s0x47e2877400b377c5:0x4d7536de0ced6a39!8m2!3d48.0651081!4d0.1196037" target="blank">3 rue de la mairie, 72650 AIGNE</a>
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="{{ path('periscolaire') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Périscolaire
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{{ path('cantine') }}">Cantine</a>
-          <a class="dropdown-item" href="{{ path('periscolaire') }}">Accueil Périscolaire</a>
-          <a class="dropdown-item" href="{{ path('tap') }}">T.A.P</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{ path('admin_login') }}">Espace mairie</a>
-        </div>
-      </li>
+</p>
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="{{ path('parents_eleves') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Parents d'élèves
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{{ path('parents_eleves') }}">Actualités des parents d'élèves</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{ path('admin_login') }}">Espace parents d'élèves</a>
-        </div>
-      </li>
+</div>
+<div>
+<p>
 
-        <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="{{ path('conseil_ecole') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Conseil d'école
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{{ path('conseil_ecole') }}">Actualités du conseil d'école</a>
-          <a class="dropdown-item" href="{{ path('questions_reponses') }}">Vos questions</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{ path('admin_login') }}">Espace délégués des parents d'élèves</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ path('infos_pratiques') }}">Infos pratiques</a>
-      </li>
-      </ul>
-      {% if app.user %}
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-        <a class="nav-link" href="{{ path ('admin_logout')}}">
-          Se deconecter
-        </a>
-        </li>
-      </ul>
-      {% endif %}
-    
-  </div>
-</nav>
+<a href="mailto:ce0720492U@ac-nantes.fr" class="mailto" id="mailto">ce0720492U@ac-nantes.fr</a>
+</p>
+
+</div>
+ <div>
+<p>
+
+ <a href="tel:+0243256347" class="tel">02 43 25 63 47</a>
+ </p>
+
+ </div>
+
+    <div>
+<p>
+
+        (c) 2020 Tous droits réservés
+</p>
+
+    </div>
+
+
+</footer>

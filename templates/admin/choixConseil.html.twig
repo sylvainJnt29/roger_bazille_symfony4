@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choissisez la partie souhaitée{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="my-5 text-center">
+<h1>Choissisez la section que vous souhaitez administrer :</h1>
+<div id="choix_mairie">
+                    <div class="my-5 text-center">
+                        
+                            <div class="card-body ">
+                                
+                                 <h5 class="card-text my-2">
+                                    <a href="{{path('admin_conseil')}}">Actualités conseil d'école</a>
+                                </h5>
+                                <h5 class="card-text my-2">
+                                    <a href="{{path('questions_reponses')}}">Questions / Réponses </a>
+                                </h5>
+                        </div> 
+                    </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

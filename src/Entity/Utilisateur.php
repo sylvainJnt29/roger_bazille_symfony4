@@ -2,15 +2,22 @@
 
 namespace App\Entity;
 
-use App\Repository\UtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\COmponent\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
+ * @UniqueEntity(
+ * fields = {"username"},
+ * message="Le nom d'utilisateur est déjà utilisé"
+ * )
  */
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -22,32 +29,29 @@ class Utilisateur
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $prenom;
+    private $password;
+
+   
 
     /**
-     * @ORM\OneToMany(targetEntity=Profil::class, mappedBy="utilisateur")
+     * @ORM\Column(type="string", length=255)
      */
-    private $profil;
+    private $roles;
 
     /**
      * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="utilisateur")
      */
-    private $menu;
+    private $menus;
 
     /**
-     * @ORM\OneToMany(targetEntity=Actus::class, mappedBy="utilisateur")
+     * @ORM\OneToMany(targetEntity=Actu::class, mappedBy="utilisateur")
      */
     private $actus;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Bilan::class, mappedBy="utilisateur")
-     */
-    private $bilan;
 
     /**
      * @ORM\OneToMany(targetEntity=Question::class, mappedBy="utilisateur")
@@ -59,12 +63,12 @@ class Utilisateur
      */
     private $reponse;
 
+   
+
     public function __construct()
     {
-        $this->profil = new ArrayCollection();
-        $this->menu = new ArrayCollection();
+        $this->menus = new ArrayCollection();
         $this->actus = new ArrayCollection();
-        $this->bilan = new ArrayCollection();
         $this->question = new ArrayCollection();
         $this->reponse = new ArrayCollection();
     }
@@ -74,57 +78,77 @@ class Utilisateur
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getUsername(): ?string
     {
-        return $this->nom;
+        return $this->username;
     }
 
-    public function setNom(string $nom): self
+    public function setUsername(string $username): self
     {
-        $this->nom = $nom;
+        $this->username = $username;
 
         return $this;
     }
 
-    public function getPrenom(): ?string
+    public function getPassword(): ?string
     {
-        return $this->prenom;
+        return $this->password;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPassword(string $password): self
     {
-        $this->prenom = $prenom;
+        $this->password = $password;
 
         return $this;
     }
-
-    /**
-     * @return Collection|Profil[]
-     */
-    public function getRelation(): Collection
+    public function eraseCredentials()
     {
-        return $this->profil;
+        
+    }
+    public function getSalt()
+    {
+        
     }
 
-    public function addRelation(Profil $profil): self
+
+    public function getVerifPassword(): ?string
     {
-        if (!$this->profil->contains($profil)) {
-            $this->profil[] = $profil;
-            $profil->setUtilisateur($this);
-        }
+        return $this->password;
+    }
+
+    public function setVerifPassword(string $verifPassword): self
+    {
+        $this->verifPassword = $verifPassword;
 
         return $this;
     }
+// public function getRoles(): array
+// {
+//     $roles = $this->roles;
+//     // guarantee every user at least has ROLE_USER
+//     $roles[] = 'ROLE_USER';
 
-    public function removeRelation(Profil $profil): self
+//     return array_unique($roles);
+// }
+  
+
+
+    public function getRoles()
     {
-        if ($this->profil->contains($profil)) {
-            $this->profil->removeElement($profil);
-            // set the owning side to null (unless already changed)
-            if ($profil->getUtilisateur() === $this) {
-                $profil->setUtilisateur(null);
-            }
-        }
+        return [$this->roles];
+    }
+
+
+    // public function getRoles() {
+    //     if (empty([$this->roles])) {
+    //         return ['ROLE_ADMIN'];
+    //     }
+    //     return [$this->roles];
+    // }
+
+    public function setRoles(string $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
@@ -132,15 +156,15 @@ class Utilisateur
     /**
      * @return Collection|Menu[]
      */
-    public function getMenu(): Collection
+    public function getMenus(): Collection
     {
-        return $this->menu;
+        return $this->menus;
     }
 
     public function addMenu(Menu $menu): self
     {
-        if (!$this->menu->contains($menu)) {
-            $this->menu[] = $menu;
+        if (!$this->menus->contains($menu)) {
+            $this->menus[] = $menu;
             $menu->setUtilisateur($this);
         }
 
@@ -149,8 +173,8 @@ class Utilisateur
 
     public function removeMenu(Menu $menu): self
     {
-        if ($this->menu->contains($menu)) {
-            $this->menu->removeElement($menu);
+        if ($this->menus->contains($menu)) {
+            $this->menus->removeElement($menu);
             // set the owning side to null (unless already changed)
             if ($menu->getUtilisateur() === $this) {
                 $menu->setUtilisateur(null);
@@ -161,14 +185,14 @@ class Utilisateur
     }
 
     /**
-     * @return Collection|Actus[]
+     * @return Collection|actu[]
      */
     public function getActus(): Collection
     {
         return $this->actus;
     }
 
-    public function addActu(Actus $actu): self
+    public function addActu(actu $actu): self
     {
         if (!$this->actus->contains($actu)) {
             $this->actus[] = $actu;
@@ -178,7 +202,7 @@ class Utilisateur
         return $this;
     }
 
-    public function removeActu(Actus $actu): self
+    public function removeActu(actu $actu): self
     {
         if ($this->actus->contains($actu)) {
             $this->actus->removeElement($actu);
@@ -192,45 +216,14 @@ class Utilisateur
     }
 
     /**
-     * @return Collection|Bilan[]
-     */
-    public function getBilan(): Collection
-    {
-        return $this->bilan;
-    }
-
-    public function addBilan(Bilan $bilan): self
-    {
-        if (!$this->bilan->contains($bilan)) {
-            $this->bilan[] = $bilan;
-            $bilan->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBilan(Bilan $bilan): self
-    {
-        if ($this->bilan->contains($bilan)) {
-            $this->bilan->removeElement($bilan);
-            // set the owning side to null (unless already changed)
-            if ($bilan->getUtilisateur() === $this) {
-                $bilan->setUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Question[]
+     * @return Collection|question[]
      */
     public function getQuestion(): Collection
     {
         return $this->question;
     }
 
-    public function addQuestion(Question $question): self
+    public function addQuestion(question $question): self
     {
         if (!$this->question->contains($question)) {
             $this->question[] = $question;
@@ -240,7 +233,7 @@ class Utilisateur
         return $this;
     }
 
-    public function removeQuestion(Question $question): self
+    public function removeQuestion(question $question): self
     {
         if ($this->question->contains($question)) {
             $this->question->removeElement($question);
@@ -283,4 +276,6 @@ class Utilisateur
 
         return $this;
     }
+
+   
 }

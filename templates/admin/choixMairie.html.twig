@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choissisez la partie souhaitée{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="my-5 text-center">
+                        
+<h1>Choissisez le type d'article que vous souhaitez modifier :</h1>
+<div id="choix_mairie">
+          
+                    <div class="my-5 text-center">
+                        
+                            <div class="card-body">
+                                
+                                 <h5 class="card-text">
+                                    <a href="{{path('admin_cantine')}}">Cantine</a>
+                                </h5>
+                                <h5 class="card-text">
+                                    <a href="{{path('admin_periscolaire')}}">Accueil Périscolaire</a>
+                                </h5>
+                                <h5 class="card-text">
+                                    <a href="{{path('admin_tap')}}">TAP</a>
+                                </h5>
+                        </div> 
+                    </div>
+            </div>
+    </div>
+</div>
+{% endblock %}
