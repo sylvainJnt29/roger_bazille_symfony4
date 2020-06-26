@@ -6,9 +6,13 @@ use App\Entity\Actu;
 use App\Entity\Menu;
 
 
+use App\Entity\Question;
+use App\Entity\Reponse;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+
+use function PHPSTORM_META\map;
 
 class AppFixtures extends Fixture
 {
@@ -42,7 +46,7 @@ class AppFixtures extends Fixture
 
         $utilisateur5 = new Utilisateur();
         $utilisateur5->setUsername('sylvain')
-                        ->setPassword('afpa')
+                        ->setPassword('$2y$10$B8OR9qEX5j3lY5Fg/5lWEO8o64kZmbxi4w3x4nF9SWd7QdORrwKi2')
                         ->setRoles('ROLE_ADMIN');
         $manager->persist($utilisateur5);
 
@@ -297,7 +301,7 @@ class AppFixtures extends Fixture
                 ->setTitre("Intervention en CM2 : les dangers des réseaux sociaux et d’internet.")
                 ->setArticle("Benoît Clavier, qui travaille pour l'association \"Stop Harcelement\" interviendra à partir du
                  lundi 11 juin 2020 et ce pour toute la semaine dans notre école. Le but de l'intervention, sensibiliser les plus jeunes aux dangers
-                 des réseaux sociaus et d'Internet.")
+                 des réseaux sociaux et d'Internet.")
                 ->setImage('actuParent2.png')
                 ->setCategorie('parent');
         $manager->persist($actuParent2);
@@ -471,6 +475,56 @@ class AppFixtures extends Fixture
             ->setTarifAbonne(3.10)
             ->setTarifPassager(3.60);
         $manager->persist($menu6);
+
+         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $question1 = new Question();
+        $question1->setQuestion("Bonjour, où en est le dossier concernant la réparation  de  la  gouttière  (fuite  au  niveau  du  perron)  et 
+         nettoyage  de  l'évacuation
+          sous  la  gouttière (travaux prévus pour l'an dernier et non réalisés).");
+        $manager->persist($question1);
+
+        $reponse1 = new Reponse();
+        $reponse1->setQuestion($question1)
+                ->setUtilisateur($utilisateur4)
+                ->setReponse("Suite à l'appel d'offre lancé par la mairie, le devis est encore en cours auprès de l'entreprise retenue.");
+        $manager->persist($reponse1);
+
+        $question2 = new Question();
+        $question2->setQuestion("Je suis en pénurie de cartouche d'encre, pouvons nous imprimer les devoirs à l'école?");
+        $manager->persist($question2);
+
+        $reponse2 = new Reponse();
+        $reponse2->setQuestion($question2)
+                ->setUtilisateur($utilisateur4)
+                ->setReponse("Oui bien sur vous pouvez vous rendre au secrétariat en allant chercher votre enfant et en respectant les gestes barrierres !");
+        $manager->persist($reponse2);
+
+        $question3 = new Question();
+        $question3->setQuestion("Y aura-t-il un projet d'école (comme les contes d'antan l'an dernier) ?  ");
+        $manager->persist($question3);
+
+        $reponse3 = new Reponse();
+        $reponse3->setQuestion($question3)
+                ->setUtilisateur($utilisateur4)
+                ->setReponse("Oui, cette année le projet commun pour toutes les classes et de repeindre le mur qui longe le portail de l'entrée.
+                En consultation avec l'équipe pédagogie et après vote des élèves, le thème retenu sera \"les quatres saisons\".");
+        $manager->persist($reponse3);
+
+        $question4 = new Question();
+        $question4->setQuestion("Qu'en est il de la visite de l'infirmière scolaire initialement prévue pour les GS cette année ??");
+        $manager->persist($question4);
+
+        $reponse4 = new Reponse();
+        $reponse4->setQuestion($question4)
+                ->setUtilisateur($utilisateur4)
+                ->setReponse("En raison du confinement et des conditions sanitaires actuelles, l’infirmière scolaire n’a pas
+                 pu réaliser les visites de GS comme cela était initialement prévu. Les élèves devraient être vus dès le mois 
+                 de septembre en CP. Un mail d’information a été adressé par le directeur aux familles dont  les  enfants bénéficient
+                  d’un PAI pour les informer de la procédure de reconduction afin que tout soit opérationnel à la rentrée.");
+        $manager->persist($reponse4);
+
+
 
 
         $manager->flush();

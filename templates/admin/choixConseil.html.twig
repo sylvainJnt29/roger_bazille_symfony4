@@ -6,21 +6,23 @@
 
 <div class="container">
     <div class="my-5 text-center">
-<h1>Choissisez la section que vous souhaitez administrer :</h1>
-<div id="choix_mairie">
-                    <div class="my-5 text-center">
-                        
-                            <div class="card-body ">
-                                
-                                 <h5 class="card-text my-2">
-                                    <a href="{{path('admin_conseil')}}">Actualités conseil d'école</a>
-                                </h5>
-                                <h5 class="card-text my-2">
-                                    <a href="{{path('questions_reponses')}}">Questions / Réponses </a>
-                                </h5>
-                        </div> 
-                    </div>
+    <h1>Choissisez la section que vous souhaitez administrer:</h1>
+        <div id="choix_mairie">
+            <div class="my-5 text-center">
+                <div class="card-body ">
+                        <h5 class="card-text my-2">
+                        <a href="{{path('admin_conseil')}}">Actualités conseil d'école</a>
+                    </h5>
+                    <h5 class="card-text my-2">
+                        <a href="{{ path('admin_questions_sans_reponse') }}">Gestion des questions
+                            {% if nb_questions > 0 %}
+                                <span class="badge badge-danger m-1">{{ nb_questions }}</span>
+                            {% endif %}
+                        </a>
+                    </h5>
+                </div> 
             </div>
         </div>
+    </div>
 </div>
 {% endblock %}

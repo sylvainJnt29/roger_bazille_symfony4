@@ -1,0 +1,36 @@
+{% extends 'questions/index.html.twig' %}
+
+
+{% block title %}Nouvelle réponse{% endblock %}
+
+{% block questions_reponses %}
+<div class="container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4 p-4">
+            {{message}}
+        </div>
+    {% endfor %}
+    <div id="contactForm" class="mt-5 p-3">
+        <div class="col"><b>Question :</b></div>
+        <div class="col">{{ question.question }}</div>
+        {% if question.reponse != null  %}
+            <div class="col"><b>Réponse :</b></div>
+            <div class="col">{{ question.reponse.reponse }}</div>
+        {% endif %}
+        <hr>
+    </div>
+
+{% endblock %}
+
+{% block form %}
+    <div id="response" class="mt-5 p-3">
+        <h2 class="mt-4">Ecrivez votre réponse ici :</h2>
+        {{form_start(form,{'attr':{'novalidate': 'novalidate'}})}}
+        {{form_widget(form)}}
+        <button class="btn btn-success mt-4 mb-4" type="submit" >Répondre</button>
+    </div>
+    {{form_end(form)}}
+</div>
+
+{% endblock %}
+

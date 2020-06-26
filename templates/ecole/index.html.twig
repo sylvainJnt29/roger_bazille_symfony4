@@ -1,10 +1,7 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
 
-<h1 class="my-5 text-center">Retrouvez ici les articles des professeurs:</h1>
 {% for message in app.flashes('success') %}
 
 <div class="alert alert-success">
@@ -12,22 +9,24 @@
 </div>
     
 {% endfor %}
+<div class="container">
+<h1 class="mt-4 p-2 text-center">Retrouvez ici les actualités des professeurs</h1>
 {% for actuProf in actu %}
 
-<div class="container">
-    <div class="my-5 text-center">
+
+    <div class="my-5 mt-5 text-center">
                             {% if ROLE_ADMIN or ROLE_USER_PROF  %}
                                     
                                     <a href="{{path('creationActuProf')}}" class="col btn btn-success">Ajouter un nouvel article</a>
                             {% endif %}       
                
-                    <div class="my-5 text-center">
+                    <div class="my-5 mt-5 text-center">
                         
                         <div class="card profile-card-5">
                             <div class="card-img-block">
                                 <img class="card-img-top" src="{{asset('images/docs/' ~ actuProf.image)}}" alt="image article prof"/>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body mt-5">
                                 <h5 class="card-date">
                                     Date de l'article :
                                 {{actuProf.createdAt|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y')}}
@@ -52,23 +51,26 @@
                                 </div>
                             {% endif %}       
                         </div> 
-                        
+                          
                     </div>
                     
     </div>
 
 
+
+
     
-</div>
 
 
 
 
-</div>
+
+
 
 {% endfor %}
-<div class="navigation">
-    {{ knp_pagination_render(actu) }}
-</div>
 
+<div class="pagination justify-content-center">
+                            {{ knp_pagination_render(actu) }}
+                        </div>
+                        </div>
 {% endblock %}

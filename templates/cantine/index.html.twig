@@ -7,22 +7,7 @@
 
 
 
-    <h1 class="my-5 text-center">Bienvenue sur la page de la cantine: </h1>
-<div id="prout">
-            <p class="my-2 text-center">
-                L’établissement travaille avec la société Océane de Restauration.
-                L’inscription à la cantine peut se faire de différentes manières: permanent ou au bordereau.
-                Une inscription ou une annulation est toujours possible la veille pour le lendemain.
-
-                <p class="lead">
-            <a href="{{asset('images/menu/menu.pdf')}}" class="btn btn-primary" role="button">
-                <i class="fas fa-info-circle"></i>
-                Cliquez ici pour obtenir
-                    le fichier PDF comprenant toutes les semaines de la période 3 !
-            </a>
-            
-
-</div>
+  
 {% for message in app.flashes('success') %}
 
 <div class="alert alert-success">
@@ -34,6 +19,22 @@
 {% for menu in menus %}
 
 <div class="container">
+      <h1 class="my-5 text-center">Bienvenue sur la page de la cantine: </h1>
+<div id="prout">
+            <p class="my-2 text-center">
+                L’établissement travaille avec la société Océane de Restauration.
+                L’inscription à la cantine peut se faire de différentes manières: permanent ou au bordereau.
+                Une inscription ou une annulation est toujours possible la veille pour le lendemain.
+
+                <p class="lead  text-center ">
+            <a href="{{asset('images/menu/menu.pdf')}}" class="btn btn-primary" role="button">
+                <i class="fas fa-info-circle"></i>
+                Cliquez ici pour obtenir
+                    le fichier PDF comprenant toutes les semaines de la période 3 !
+            </a>
+            
+    </div>
+
     <div class="my-5 text-center">
                                   {% if ROLE_ADMIN or ROLE_USER_MAIRIE  %}
 
@@ -69,18 +70,18 @@
                                 </div>
                             {% endif %}          
                         </div> 
-                          
+                          </div>
                     </div>
           
-    </div>
 
+</div>
 
 
 {% endfor %}
 
 
 
-<div class="navigation">
+<div class="navigation justify-content-center">
     {{ knp_pagination_render(menus) }}
 </div>
  

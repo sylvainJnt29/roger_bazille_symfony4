@@ -1,0 +1,41 @@
+{% extends 'questions/index.html.twig' %}
+
+
+{% block title %}Question en attente de réponse{% endblock %}
+
+{% block questions_reponses %}
+
+<div class="container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4 p-4">
+            {{message}}
+        </div>
+    {% endfor %}
+    <h1 class="mt-4 p-2 text-center">Retrouvez ici la page des questions/réponses auprès du conseil d'école !</h1>
+    <div id="contactForm" class="mt-5 p-3">
+    <h2 class="mt-4 ml-3"> {{ questions | length }} {{pluralize(nb_questions, 'Question')}} {{pluralize(nb_questions, 'a')}} déjà été {{pluralize(nb_questions, 'posée')}}:</h2>
+        {% for question in questions %}
+            <div class="col"><b>Question :</b></div>
+            <div class="col">{{ question.question }}</div>
+            {% if question.reponse != null  %}
+                <div class="col"><b>Réponse :</b></div>
+                <div class="col">{{ question.reponse.reponse }}</div>
+            {% endif %}
+            <div class="text text-center row justify-content-center">    
+                {% if question.reponse == null %}
+                    <a href="{{path('question_show',{'id' : question.id})}}" class="btn btn-success">Répondre</a> 
+                {% endif %}
+                <a href="{{path('edit_question',{'id' : question.id})}}" class="btn btn-success">Modifier</a> 
+                <form action="{{path('supQuestion',{'id' : question.id})}}" method="POST" onsubmit="return confirm('Voulez vous vraiement supprimer??')">
+                    <input type="hidden" name="_method" value="SUP">
+                    <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ question.id)}}">
+                    <input type="submit" class="btn btn-danger" value="supprimer">
+                </form>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+

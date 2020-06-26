@@ -1,0 +1,17 @@
+{% extends 'questions/index.html.twig' %}
+
+
+{% block title %}Editer la question{% endblock %}
+
+{% block form %}
+    <div id="response" class="mt-5 p-3">
+        <h2 class="mt-4">Question :</h2>
+        {{form_start(form,{'attr':{'novalidate': 'novalidate'}})}}
+        {{form_widget(form)}}
+        <button class="btn btn-success mt-4 mb-4" type="submit" >Valider</button>
+    </div>
+    {{form_end(form)}}
+</div>
+
+{% endblock %}
+

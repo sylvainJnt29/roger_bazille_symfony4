@@ -1,99 +1,95 @@
-<nav class="navbar navbar-expand-lg  navbar-light bg-info" id="navbar">
+
+
+<nav class="navbar navbar-expand-sm navbar-light bg-info" id="navbar">
   <a class="navbar-brand" href="{{ path('home') }}">Ecole Roger Bazille</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+      aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto ">
+  <div class="collapse navbar-collapse navbar-nav " id="collapsibleNavId">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active">
-      
         <a class="nav-link" href="{{ path('home') }}">
-            <i class="fas fa-home"></i>
+          <i class="fas fa-home"></i>
             Accueil 
         </a>
       </li>
-      <!--
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      -->
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="{{path('ecole')}}"  id="navbarDropdown" role="link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Ecole
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{{path('ecole')}}">Actualités des professeurs</a>
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_PROF')%}
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{path('admin_ecole')}}">Espace professeurs</a>
+        <a class="nav-link dropdown-toggle" href="#" id="actu_prof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ecole</a>
+        <div class="dropdown-menu" aria-labelledby="actu_prof">
+          <a class="dropdown-item" href="{{path('ecole')}}">Actualités des professeurs</a>
+          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_PROF')%}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{path('admin_ecole')}}">Espace professeurs</a>
           {% endif %}
         </div>
       </li>
-
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Périscolaire
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Périscolaire</a>
+        <div class="dropdown-menu" aria-labelledby="dropdownId">
           <a class="dropdown-item" href="{{path('cantine')}}">Cantine</a>
           <a class="dropdown-item" href="{{path('periscolaire')}}">Accueil Périscolaire</a>
           <a class="dropdown-item" href="{{path('tap')}}">T.A.P</a>
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_MAIRIE')%}
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{path('choix_admin')}}">Espace mairie</a>
+          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_MAIRIE')%}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{path('choix_admin')}}">Espace mairie</a>
+          {% endif %}
         </div>
-        {% endif %}
-
       </li>
-
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Parents d'élèves
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="parents_eleves">Actualités des parents d'élèves</a>
+        <div class="dropdown-menu" aria-labelledby="dropdownId">
+          <a class="dropdown-item" href="{{path('parents_eleves')}}">Actualités des parents d'élèves</a>
           {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_PARENT')%}
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{path('admin_parents')}}">Espace parents d'élèves</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{path('admin_parents')}}">Espace parents d'élèves</a>
+          {% endif %}
         </div>
-        {% endif %}
       </li>
-
-        <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Conseil d'école
+          {% if nb_questions > 0 and (is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_PROF')) %}
+            <span class="badge badge-danger m-1">{{ nb_questions }}</span>
+          {% endif %}
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu" aria-labelledby="dropdownId">
           <a class="dropdown-item" href="{{path('conseil_ecole')}}">Actualités du conseil d'école</a>
-          <a class="dropdown-item" href="{{path('questions_reponses')}}">Vos questions</a>
+          <a class="dropdown-item" href="{{path('questions')}}">Vos questions</a>
           {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_CONSEIL')%}
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{path('choix_admin_conseil')}}">Espace délégués des parents d'élèves</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{path('choix_admin_conseil')}}">
+              Espace délégués des parents d'élèves 
+              {% if nb_questions > 0 %}
+                <span class="badge badge-danger m-1">{{ nb_questions }}</span>
+              {% endif %}
+            </a>            
+          {% endif %}
         </div>
-        {% endif %}
-        
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Infos pratiques
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownId">
+          <a class="dropdown-item" href="{{path('infos_pratiques')}}">Infos pratiques</a>
+          {% if is_granted('ROLE_ADMIN') %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{path('admin_infos_pratiques')}}">Espace administration des infos pratiques</a>
+          {% endif %}
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="{{path('infos_pratiques')}}">Infos pratiques</a>
-      </li>
-      </ul>
-      
-      <ul class="navbar-nav ml-auto">
-        {% if not app.user %}
-        <li class="nav-item">
-        <a class="nav-link" href="{{path('app_login')}}">
-          Se connecter
-        </a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-        <a class="nav-link" href="{{path('app_logout')}}">
-          Se déconnecter
-        </a>
-        </li>
-        {% endif %}
-      </ul>
-      
+      </li> -->
+    </ul>
+    {% if user %}
+      <span class="" id="connection">
+        <a name="login" id="login" class="nav-link" href="{{path('app_logout')}}" role="button">Se déconnecter<br><p class="h6">({{user.username}})</p></a>
+      </span>
+    {% else %}
+      <a name="login" id="login" class="nav-link" href="{{path('app_login')}}" role="button">Se connecter</a>
+    {% endif %}
   </div>
 </nav>
+

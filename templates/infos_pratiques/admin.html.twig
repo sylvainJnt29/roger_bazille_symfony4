@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="mt-4 p-2 text-center alert alert-success">
+                {{message}}
+            </div>
+        {% endfor %}
+        <h1 class="text-center" id="titreInfosPratiques">Retrouvez ici les messages reçus :</h1>
+        {% for messageRecu in messageRecus %}
+            <div id="contactForm" class="mt-5">    
+                <div class="col"><b>Prénom :</b></div>
+                <div class="col">{{messageRecu.firstname}}</div>
+                <div class="col"><b>Nom :</b></div>
+                <div class="col">{{messageRecu.lastname}}</div>
+                <div class="col"><b>Numéro de téléphone :</b></div>
+                <div class="col">{{messageRecu.phone}}</div>
+                <div class="col"><b>Adresse mail :</b></div>
+                <div class="col">{{messageRecu.email}}</div>
+                <div class="col"><b>Message :</b></div>
+                <div class="col">{{messageRecu.message}}<hr></div>         
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="row no-gutters">
+                        <form method="post" class="col" action="{{path('suppMsg',{'id':messageRecu.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer l\'article?')">
+                            <input type="hidden" name="_method" value="SUP">
+                            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ messageRecu.id)}}">
+                            <input type="submit" class="btn btn-danger w-100" value="supprimer">
+                        </form>
+                    </div>
+                {% endif %}       
+            </div> 
+        {% endfor %}
+    </div>
+{% endblock %}
+    

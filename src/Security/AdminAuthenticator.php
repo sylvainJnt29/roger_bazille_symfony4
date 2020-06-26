@@ -78,7 +78,7 @@ class AdminAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return ($credentials['password'] == $user->getPassword()) ? true : false ;
+        return password_verify($credentials['password'],$user->getPassword());
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)

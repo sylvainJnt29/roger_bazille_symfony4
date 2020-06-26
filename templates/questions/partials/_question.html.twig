@@ -1,0 +1,40 @@
+{% extends 'questions/index.html.twig' %}
+
+
+{% block title %}Nouvelle question{% endblock %}
+
+{% block questions_reponses %}
+
+<div class="container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4 p-4">
+            {{message}}
+        </div>
+    {% endfor %}
+    <h1 class="mt-4 p-2 text-center">Retrouvez ici la page des questions/réponses auprès du conseil d'école !</h1>
+    <div id="contactForm" class="mt-5 p-3">
+    <h2 class="mt-4 ml-3"> {{ questions | length }} {{pluralize(nb_questions, 'Question')}} {{pluralize(nb_questions, 'a')}} déjà été {{pluralize(nb_questions, 'posée')}}:</h2>
+        {% for question in questions %}
+            <div class="col"><b>Question :</b></div>
+            <div class="col">{{ question.question }}</div>
+            {% if question.reponse != null  %}
+                <div class="col"><b>Réponse :</b></div>
+                <div class="col">{{ question.reponse.reponse }}</div>
+            {% endif %}
+            <hr>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block form %}
+    <div id="question" class="mt-5 p-3">
+        <h2 class="mt-4">Posez nous une question :</h2>
+        {{form_start(form,{'attr':{'novalidate': 'novalidate'}})}}
+        {{form_widget(form)}}
+        <button class="btn btn-success mt-4 mb-4" type="submit" >Posez votre question </button>
+    </div>
+    {{form_end(form)}}
+</div>
+
+{% endblock %}

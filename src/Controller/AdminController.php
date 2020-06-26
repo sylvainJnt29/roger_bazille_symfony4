@@ -9,10 +9,17 @@ use App\Entity\Menu;
 
 
 use App\Form\ActuType;
-
 use App\Form\MenuType;
+use App\Entity\Contact;
+use App\Entity\Reponse;
+use App\Entity\Question;
+use App\Form\ContactType;
+use App\Form\QuestionType;
 use App\Repository\ActuRepository;
 use App\Repository\MenuRepository;
+use App\Repository\ContactRepository;
+use App\Repository\ReponseRepository;
+use App\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -341,9 +348,11 @@ class AdminController extends AbstractController
    /**
     * @Route("/choix_conseil", name="choix_admin_conseil")
     */
-    public function choixAdminConseil()
+    public function choixAdminConseil(QuestionRepository $questionRepository)
     {
-        return $this->render('admin/choixConseil.html.twig');
+        $questions = $questionRepository->findBy(['reponse'=>null]);
+        return $this->render('admin/choixConseil.html.twig',[
+        "nb_questions"=> count($questions)]);
     }
 
     /**
@@ -408,5 +417,158 @@ class AdminController extends AbstractController
            return $this->redirectToRoute("admin_conseil");
        }
    }
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+
+    /**
+    * @Route("/questions", name="admin_questions")
+    */
+    public function main(Request $request,EntityManagerInterface $manager,QuestionRepository $questionRepository, ReponseRepository $reponseRepository)
+    {
+        $question = new Question();
+        $question->setCreatedAt(new \DateTime('now'));
+        $form = $this->createForm(QuestionType::class, $question);
+         
+        $form->handleRequest($request);
+         
+        if ($form->isSubmitted() && $form->isValid()) {
+            $question->setUtilisateur($this->getUser());
+ 
+            $manager->persist($question);
+            $manager->flush();
+            $this->addFlash('success',"Votre question a bien été enregistrée, nous vous repondrons dès que possible.
+            Toute utilisation malhonnête ou frauduleuse entrainera des poursuites.");
+            return $this->redirectToRoute('questions', ['id'=> $question->getId()]);
+        }
+        $questions = $questionRepository->findAll();
+        $reponses = $reponseRepository->findAll();
+        return $this->render('questions/partials/_question.html.twig', [
+            "nb_questions"=> count($questions),
+            "questions" => $questions,
+            "reponses" => $reponses,
+            'form'=>$form->createView()
+            ]);
+    }
+    
+    /**
+     * @Route("/question/repondre/{id}", name="admin_question_show")
+     */
+    public function show(Question $question, Request $request,EntityManagerInterface $manager,QuestionRepository $questionRepository,ReponseRepository $reponseRepository)
+    {
+        $reponse = new Reponse();
+ 
+        $form = $this->createForm(ReponseType::class, $reponse);
+         
+        $form->handleRequest($request);
+     
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reponse->setCreatedAt(new \DateTime())
+                    ->setQuestion($question)
+                    ->setUtilisateur($this->getUser());
+            $manager->persist($reponse);
+            $manager->flush();
+            $reponses = $reponseRepository->findAll();
+            $this->addFlash('success',"Réponse envoyée.");
+            return $this->redirectToRoute('questions',
+             ['id'=> $question->getId(),
+                "reponses" => $reponses
+            ]);
+        }
+        return $this->render('questions/partials/_reponse.html.twig', [
+            "question" => $question,
+            'form'=>$form->createView(),
+            //On le met a 1 pour pouvoir afficher "1 question a déjà été posée lol"
+            /*
+             TODO :
+
+            */
+             'nb_questions'=>1
+        ]);
+    }
+
+    /**
+     * @Route("/question/questions_sans_reponse", name="admin_questions_sans_reponse")
+     */
+    public function questions_sans_reponses(QuestionRepository $repo){
+        $questions=$repo->findAll();
+        return $this->render('questions/partials/_questions_sans_reponse.html.twig',[
+            "questions" => $questions,
+            'nb_questions'=>count($questions)
+        ]);
+    }
+
+    /**
+     * @Route("/question/edit/{id}", name="edit_question")
+     */
+    public function edit_question(Question $question, Request $request, EntityManagerInterface $em){
+        $form = $this->createForm(QuestionType::class, $question);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('admin_questions_sans_reponse');
+        }
+        return $this->render('questions/partials/_edit.html.twig', ['form'=>$form->createView()]);
+    }
+
+    /**
+     * @Route("/admin/{id}", name="supQuestion",methods="SUP")
+     */
+    public function suppressionQuestion(Question $question = null,Request $request,EntityManagerInterface $entityManager)
+    {
+        if ($this->isCsrfTokenValid("SUP".$question->getId(),$request->get("_token"))){
+            $entityManager->remove($question);
+            $entityManager->flush();
+            $this->addFlash('success',"l'action a été effectuée");
+            return $this->redirectToRoute("questions");
+        }
+    }
+      /**
+     * @Route("/admin/{id}", name="supReponse",methods="SUP")
+     */
+    public function suppressionReponse(Reponse $reponse = null,Request $request,EntityManagerInterface $entityManager)
+    {
+        if ($this->isCsrfTokenValid("SUP".$reponse->getId(),$request->get("_token"))){
+            $entityManager->remove($reponse);
+            $entityManager->flush();
+            $this->addFlash('success',"l'action a été effectuée");
+            return $this->redirectToRoute("questions");
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * @Route("/infos_pratiques", name="admin_infos_pratiques",methods="GET|POST")
+     */
+    public function infosPratiques(Contact $contact = null,Request $request,EntityManagerInterface $em, ContactRepository $contactRepository)
+    {
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class,$contact);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($contact);
+            $em->flush();
+            $this->addFlash('success',"Nous avons bien enregistré votre message, nous vous recontacterons dès que possible");
+            return $this->redirectToRoute("infos_pratiques");
+        }
+        $messageRecus=$contactRepository->findAll();
+        return $this->render('infos_pratiques/admin.html.twig',[
+            'form' => $form->createView(),
+            'messageRecus' => $messageRecus,
+            "ROLE_ADMIN" =>true
+        ]);
+    }
+    
+    /** 
+     * @Route("/infos_pratiques/{id}",name="suppMsg", methods="SUP")
+     */
+   public function suppressionMessage(Contact $contact,Request $request,EntityManagerInterface $om){
+       if($this->isCsrfTokenValid("SUP".$contact->getId(),$request->get("_token"))){
+           $om->remove($contact);
+           $om->flush();
+           $this->addFlash('success',"L'action a été effectuée");
+           return $this->redirectToRoute("admin_infos_pratiques");
+       }
+}
 }
 

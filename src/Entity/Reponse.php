@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ReponseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=ReponseRepository::class)
@@ -24,6 +26,7 @@ class Reponse
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $reponse;
 
@@ -59,7 +62,7 @@ class Reponse
         return $this->reponse;
     }
 
-    public function setReponse(string $reponse): self
+    public function setReponse(?string $reponse): self
     {
         $this->reponse = $reponse;
 

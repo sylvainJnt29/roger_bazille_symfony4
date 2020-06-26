@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+{% block questions_reponses %}
+{% endblock %}
+{% block form %}
+{% endblock %}
+
+{% endblock %}
+
+
+{#
+
+<div class="container">
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success mt-4 p-4">
+        {{message}}
+    </div>
+{% endfor %}
+<h1 class="mt-4 p-2 text-center">Retrouvez ici la page des questions/réponses auprès du conseil d'école !</h1>
+
+    <div id="contactForm" class="mt-5">
+        
+  <h2 class="mt-4 ml-3"> {{ questions | length }} {{pluralize(nb_questions, 'Question')}} {{pluralize(nb_questions, 'a')}} déjà été {{pluralize(nb_questions, 'posée')}}:</h2>
+            {% for question in questions %}
+                {% if question.reponse != null %}
+                    <div class="col"><b>Question :</b></div>
+                    <div class="col">{{ question.question }}</div>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_CONSEIL') %}
+                        <div class="text text-center">    
+                            <form action="{{path('supQuestion',{'id' : question.id})}}" method="POST" onsubmit="return confirm('Voulez vous vraiement supprimer??')">
+                                <input type="hidden" name="_method" value="SUP">
+                                <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ question.id)}}">
+                                <input type="submit" class="btn btn-danger" value="supprimer">
+                            </form> 
+                        </div>
+                    {% endif %}
+                {% elseif (question.reponse == null) %}
+                    <div class="col"><b>Question :</b></div>
+                    <div class="col">{{ question.question }}</div>
+                    <div class="col">
+                        <a class="btn btn-success  mt-4 " href="{{ path('question_show', {'id': question.id}) }}">Répondre</a>
+                    </div>
+                    <div class="text text-center">    
+                        <form action="{{path('supQuestion',{'id' : question.id})}}" method="POST" onsubmit="return confirm('Voulez vous vraiement supprimer??')">
+                            <input type="hidden" name="_method" value="SUP">
+                            <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ question.id)}}">
+                            <input type="submit" class="btn btn-danger" value="supprimer">
+                        </form> 
+                    </div>
+                {% endif %}
+                {% if question.reponse != null %}           
+                    <div class="col"><b>Réponse :</b></div>
+                {% endif %}
+             
+                <div class="col">
+                    {% if question.reponse != null %}
+                        {{ question.reponse.reponse }}
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_CONSEIL') %}
+
+                <!-- Attention zone de test dangereuse !! -->
+                    {% if nb_questions == 1 %}
+
+                    {% else %}
+                        {% block div_id %}
+                        {% endblock %}
+                    {% endif %}
+                <!-- Sortie de la warning zone !! -->
+
+                <div class="text text-center">
+                    <form action="{{path('supReponse',{'id' : question.id})}}" method="POST" onsubmit="return confirm('Voulez vous vraiement supprimer??')">
+                        <input type="hidden" name="_method" value="SUP">
+                        <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ question.id)}}">
+                        <input type="submit" class="btn btn-danger" value="supprimer">
+                    </form>
+                </div>
+                {% endif %}
+                {% endif %}
+                </div>
+                 <hr>
+            {% endfor  %}
+           
+    </div> 
+
+<!-- Remettre ici le block div_id après essais por favor -->
+
+
+</div>
+
+
+#}

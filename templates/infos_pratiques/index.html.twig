@@ -3,67 +3,50 @@
 
 
 {% block body %}
-
-
-
-
-<div id="mep_infos">
-  <div id="mep_infos_gauche">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2666.3379456957396!2d0.1193054042264935!3d48.06511946699315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e2877400b377c5%3A0x4d7536de0ced6a39!2s3%20Rue%20de%20la%20Mairie%2C%2072650%20Aign%C3%A9!5e0!3m2!1sfr!2sfr!4v1588075781039!5m2!1sfr!2sfr" width="700" height="550" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-  </div>
-
-                        
-                         
-                               
-
-
-  <div id="mep_milieu_droite_contact">
-<div id="mep_infos_milieu">
-
-      <form action="<?= PATH ?>infos_pratiques/traitementMessage" method="post" id="form">
-
-      <fieldset>
-        <legend>Contactez nous :</legend>
-          Votre nom:
-          <input type="text" name="nom_contact" id="nom_contact" required>
-          Votre prénom
-          <input type="text" name="prenom_contact" id="prenom_contact" required>
-          Votre adresse mail:
-          <input type="mail" name="mail_contact" id="mail_contact" required>
-          Pourquoi nous contacter?
-          <textarea name="message_contact" id="message_contact" cols="10" rows=5 required></textarea>
-          <hr>
-          <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
-          <hr>
-          <input type="submit" name="action" value="Envoyer" id="btnSubmitContact">
-      </fieldset>
-    </form>
-</div>
-  
-  <div id="mep_infos_droit">
-    <p>
-    <u>Les horaires:</u>
-    </p>
-    <p>
-      Du Lundi au Vendredi: 9h - 16h
-    </p>
-    <p>
-      Le Mercredi: 9h - 12h
-    </p>
-    <p>
-      <a href="{{asset('images/docs/règlement_interieur.pdf')}}">Téléchargez le règlement intérieur</a>
-    </p>
+  <div class="container">
+    <div id="googlemap" class="mt-4">
+        <div id="mep_infos_gauche">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2666.3379456957396!2d0.1193054042264935!3d48.06511946699315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e2877400b377c5%3A0x4d7536de0ced6a39!2s3%20Rue%20de%20la%20Mairie%2C%2072650%20Aign%C3%A9!5e0!3m2!1sfr!2sfr!4v1588075781039!5m2!1sfr!2sfr" width="1000" height="600" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </div>
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success">
+        {{message}}
+      </div>
+    {% endfor %}
+    {% if not form.vars.valid %}
+      <div class="alert alert-danger">
+        Erreur dans le formulaire veuillez réessayer.
+      </div>
+    {% endif %}  
+    <div id="contactForm" class="mt-4">
+      {{form_start(form)}}
+        <div class="row m-3">
+          <div class="col">{{form_row(form.firstname)}}</div>
+          <div class="col">{{form_row(form.lastname)}}</div>
+        </div>
+        <div class="row m-3">
+          <div class="col">{{form_row(form.phone)}}</div>
+          <div class="col">{{form_row(form.email)}}</div>
+        </div>
+        <div class="row m-3">
+      <div class="col">{{form_rest(form)}}</div>
+      </div>
+      <div class="form-group m-3 text-center">
+          <button class="btn btn-primary">Envoyer</button>
+      </div>
+      {{form_end(form)}}
+    </div> 
+    <div id="infos" class="mt-5">
+        <p>
+          Les horaires :
+        </p>
+        <p>
+          Du Lundi au Vendredi: 9h00 - 16h00 <br> Le Mercredi: 9h00 - 12h00
+        </p>
+        <p>
+          <a href="{{asset('images/docs/règlement_interieur.pdf')}}">Téléchargez le règlement intérieur</a>
+        </p>
     </div>
   </div>
-  <div id="reponse_formulaire">
-
-
-
-</div>
-    </div>
- 
-
-
-
-
 {% endblock %}
