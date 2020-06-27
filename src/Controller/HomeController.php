@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Contact;
 use App\Form\ContactType;
-
 use App\Repository\ActuRepository;
 use App\Repository\ContactRepository;
 use App\Repository\MenuRepository;
@@ -19,17 +17,18 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class HomeController extends AbstractController
  {
     /**
-     * @Route("", name="home")
-     */
+    * @Route("", name="home")
+    */
     public function index()
     {
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
         ]);
     }
+
     /**
-     * @Route("/infos_pratiques", name="infos_pratiques",methods="GET|POST")
-     */
+    * @Route("/infos_pratiques", name="infos_pratiques",methods="GET|POST")
+    */
     public function infosPratiques(Contact $contact = null,Request $request,EntityManagerInterface $em, ContactRepository $contactRepository)
     {
         $contact = new Contact();
@@ -59,7 +58,6 @@ class HomeController extends AbstractController
             $request->query->getInt('page',1),
             1
         );
-        
         return $this->render('cantine/index.html.twig', [
             'menus' => $menus,
             "ROLE_ADMIN" =>false,
@@ -67,14 +65,14 @@ class HomeController extends AbstractController
         ]);
     }
     /**
-     * @Route("/conseil_ecole", name="conseil_ecole")
-     */
+    * @Route("/conseil_ecole", name="conseil_ecole")
+    */
     public function conseilEcole(ActuRepository $actusConseilEcoleRepo,PaginatorInterface $paginatorInterface,Request $request)
     {
         $actusConseil = $paginatorInterface->paginate(
-            $actusConseilEcoleRepo->findConseilWithPagination(),
-            $request->query->getInt('page',1),
-            3
+        $actusConseilEcoleRepo->findConseilWithPagination(),
+        $request->query->getInt('page',1),
+        3
         );
         return $this->render('conseil_ecole/index.html.twig', [
             'actusConseil' => $actusConseil,
@@ -82,15 +80,16 @@ class HomeController extends AbstractController
             "ROLE_USER_CONSEIL" =>false
         ]);
     }
-     /**
+
+    /**
     * @Route("/ecole", name="ecole")
     */
     public function ecole(ActuRepository $ActuRepo,PaginatorInterface $paginatorInterface,Request $request)
     {
         $actu = $paginatorInterface->paginate(
-            $ActuRepo->findProfWithPagination(),
-            $request->query->getInt('page',1),
-            3
+        $ActuRepo->findProfWithPagination(),
+        $request->query->getInt('page',1),
+        3
         );
         return $this->render('ecole/index.html.twig', [
             "actu" => $actu,
@@ -98,32 +97,31 @@ class HomeController extends AbstractController
             "ROLE_USER_PROF" =>false
         ]);
     }
-     /**
-     * @Route("/parents_eleves", name="parents_eleves")
-     */
+    /**
+    * @Route("/parents_eleves", name="parents_eleves")
+    */
     public function parentsEleves(ActuRepository $ActusParentsElevesRepo,PaginatorInterface $paginatorInterface,Request $request)
     {
-         $actuParents = $paginatorInterface->paginate(
-            $ActusParentsElevesRepo->findParentWithPagination(),
-            $request->query->getInt('page',1),
-            3
+        $actuParents = $paginatorInterface->paginate(
+        $ActusParentsElevesRepo->findParentWithPagination(),
+        $request->query->getInt('page',1),
+        3
         );
         return $this->render('parents_eleves/index.html.twig', [
-           
             'actusParents' => $actuParents,
             "ROLE_ADMIN" =>false,
             "ROLE_USER_PARENT" =>false
         ]);
     }
     /**
-     * @Route("/periscolaire", name="periscolaire")
-     */
+    * @Route("/periscolaire", name="periscolaire")
+    */
     public function periscolaire(ActuRepository $ActuRepo,PaginatorInterface $paginatorInterface,Request $request)
     {
         $actuPeriscolaire = $paginatorInterface->paginate(
-            $ActuRepo->findPeriscolaireWithPagination(),
-            $request->query->getInt('page',1),
-            3
+        $ActuRepo->findPeriscolaireWithPagination(),
+        $request->query->getInt('page',1),
+        3
         );
         return $this->render('periscolaire/index.html.twig', [
             'actuPeriscolaire' => $actuPeriscolaire,
@@ -131,22 +129,24 @@ class HomeController extends AbstractController
             "ROLE_USER_MAIRIE" =>false
         ]);
     }
+
     /**
-     * @Route("/questions_reponses", name="questions_reponses")
-     */
+    * @Route("/questions_reponses", name="questions_reponses")
+    */
     public function questionsReponses()
     {
         return $this->render('questions_reponses/index.html.twig');
     }
+
     /**
-     * @Route("/tap", name="tap")
-     */
+    * @Route("/tap", name="tap")
+    */
     public function tap(ActuRepository $ActuRepo,PaginatorInterface $paginatorInterface,Request $request)
     {
         $tap = $paginatorInterface->paginate(
-            $ActuRepo->findTapWithPagination(),
-            $request->query->getInt('page',1),
-            3
+        $ActuRepo->findTapWithPagination(),
+        $request->query->getInt('page',1),
+        3
         );
         return $this->render('tap/index.html.twig', [
             'actusTap' => $tap,
@@ -157,10 +157,10 @@ class HomeController extends AbstractController
     }
        
     /**
-     * @Route("/pass/{pass}")
-     * création d'une méthode de hashage
-     * $2y$10$B8OR9qEX5j3lY5Fg/5lWEO8o64kZmbxi4w3x4nF9SWd7QdORrwKi2 
-     */
+    * @Route("/pass/{pass}")
+    * création d'une méthode de hashage
+    * $2y$10$B8OR9qEX5j3lY5Fg/5lWEO8o64kZmbxi4w3x4nF9SWd7QdORrwKi2 
+    */
     public function hash_pass($pass){
         echo password_hash($pass, PASSWORD_DEFAULT);
     }

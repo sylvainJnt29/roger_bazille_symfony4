@@ -21,11 +21,7 @@ class ReponseType extends AbstractType
                 'label'=>'Votre réponse',
                 'attr' =>['placeholder'=>'Veuillez saisir votre réponse']
             ])
-            // ->add('utilisateur',TextType::class,[
-            //     'label' => 'Votre nom',
-            //     'attr' => ['placeholder'=>'Nom']
-            // ])
-           
+            // ->add('utilisateur')
         ;
     }
 

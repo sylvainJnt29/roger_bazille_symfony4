@@ -3,11 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Actu;
-
 use App\Entity\Menu;
-
-
-
 use App\Form\ActuType;
 use App\Form\MenuType;
 use App\Entity\Contact;
@@ -31,29 +27,32 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class AdminController extends AbstractController
 {
-     /**
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Partie Admin Ecole ////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
     * @Route("/ecole", name="admin_ecole")
     */
     public function ecoleAdmin(ActuRepository $ActuRepo,PaginatorInterface $paginatorInterface,Request $request)
     {
         $actu = $paginatorInterface->paginate(
-            $ActuRepo->findProfWithPagination(),
-            $request->query->getInt('page',1),
-            3
+        $ActuRepo->findProfWithPagination(),
+        $request->query->getInt('page',1),
+        3
         );
-        
-        return $this->render('ecole/index.html.twig', [
+        return $this->render('ecole/index.html.twig',[
             "actu" => $actu,
             "ROLE_ADMIN" =>true,
             "ROLE_USER_PROF" =>true
         ]);
     }
 
-     /**
-     * @Route("/creationActuProf", name="creationActuProf")
-     * @Route("/ecole/{id}",name="modificationActuEcole",methods="GET|POST")
-     */
-    public function modificationActuEcole(Actu $actuEcole = null, Request $request,EntityManagerInterface $om)
+    /**
+    * @Route("/creationActuProf", name="creationActuProf")
+    * @Route("/ecole/{id}",name="modificationActuEcole",methods="GET|POST")
+    */
+    public function modificationActuEcole(Actu $actuEcole = null, Request $request,EntityManagerInterface $em)
     {
         if(!$actuEcole){
             $actuEcole = new Actu();
@@ -70,8 +69,8 @@ class AdminController extends AbstractController
                     break;
             };
             $actuEcole->setCategorie($categorie);
-            $om->persist($actuEcole);
-            $om->flush();
+            $em->persist($actuEcole);
+            $em->flush();
             $this->addFlash('success',"L'action a été éffectuée");
             return $this->redirectToRoute("admin_ecole");
         }
@@ -82,18 +81,21 @@ class AdminController extends AbstractController
     }
     
     /** 
-     * @Route("/ecole/{id}",name="suppActuProf", methods="SUP")
-     */
-   public function suppression(Actu $actu,Request $request,EntityManagerInterface $om){
-       if($this->isCsrfTokenValid("SUP".$actu->getId(),$request->get("_token"))){
-           $om->remove($actu);
-           $om->flush();
+    * @Route("/ecole/{id}",name="suppActuProf", methods="SUP")
+    */
+    public function suppression(Actu $actu,Request $request,EntityManagerInterface $em){
+        if($this->isCsrfTokenValid("SUP".$actu->getId(),$request->get("_token"))){
+           $em->remove($actu);
+           $em->flush();
            $this->addFlash('success',"L'action a été effectuée");
            return $this->redirectToRoute("admin_ecole");
-       }
+        }
    }
 
-   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Partie Admin Cantine //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
     * @Route("/mairie", name="choix_admin")
     */
@@ -102,17 +104,15 @@ class AdminController extends AbstractController
         return $this->render('admin/choixMairie.html.twig');
     }
 
-
-
     /**
     * @Route("/cantine", name="admin_cantine")
     */
     public function cantineAdmin(MenuRepository $menuRepository,PaginatorInterface $paginatorInterface,Request $request)
     {
         $menu = $paginatorInterface->paginate(
-            $menuRepository->findAllWithPagination(),
-            $request->query->getInt('page',1),
-            1
+        $menuRepository->findAllWithPagination(),
+        $request->query->getInt('page',1),
+        1
         );
         return $this->render('cantine/index.html.twig', [
             "menus" => $menu,
@@ -120,11 +120,12 @@ class AdminController extends AbstractController
             "ROLE_USER_PROF" =>true
         ]);
     }
-     /**
-     * @Route("/creationMenu", name="creationMenu")
-     * @Route("/cantine/{id}",name="modificationMenu",methods="GET|POST")
-     */
-    public function modificationMenu(Menu $menu = null, Request $request,EntityManagerInterface $om)
+
+    /**
+    * @Route("/creationMenu", name="creationMenu")
+    * @Route("/cantine/{id}",name="modificationMenu",methods="GET|POST")
+    */
+    public function modificationMenu(Menu $menu = null, Request $request,EntityManagerInterface $em)
     {
         if(!$menu){
             $menu = new Menu();
@@ -132,8 +133,8 @@ class AdminController extends AbstractController
         $form = $this->createForm(MenuType::class,$menu);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $om->persist($menu);
-            $om->flush();
+            $em->persist($menu);
+            $em->flush();
             $this->addFlash('success',"L'action a été éffectuée");
             return $this->redirectToRoute("admin_cantine");
         }
@@ -144,18 +145,21 @@ class AdminController extends AbstractController
     }
     
     /** 
-     * @Route("/cantine/{id}",name="suppMenu", methods="SUP")
-     */
-   public function suppressionMenu(Menu $menu,Request $request,EntityManagerInterface $om){
-       if($this->isCsrfTokenValid("SUP".$menu->getId(),$request->get("_token"))){
-           $om->remove($menu);
-           $om->flush();
+    * @Route("/cantine/{id}",name="suppMenu", methods="SUP")
+    */
+    public function suppressionMenu(Menu $menu,Request $request,EntityManagerInterface $em){
+        if($this->isCsrfTokenValid("SUP".$menu->getId(),$request->get("_token"))){
+           $em->remove($menu);
+           $em->flush();
            $this->addFlash('success',"L'action a été effectuée");
            return $this->redirectToRoute("admin_cantine");
        }
    }
 
-   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Partie Admin Periscolaire /////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
     * @Route("/periscolaire", name="admin_periscolaire")
     */
@@ -173,15 +177,14 @@ class AdminController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/creationActuPeriscolaire", name="creationActuPeriscolaire")
-     * @Route("/periscolaire/{id}",name="modificationPeriscolaire",methods="GET|POST")
-     */
-    public function modificationActuPeriscolaire(Actu $actuPeriscolaire = null, Request $request,EntityManagerInterface $om)
+    /**
+    * @Route("/creationActuPeriscolaire", name="creationActuPeriscolaire")
+    * @Route("/periscolaire/{id}",name="modificationPeriscolaire",methods="GET|POST")
+    */
+    public function modificationActuPeriscolaire(Actu $actuPeriscolaire = null, Request $request,EntityManagerInterface $em)
     {
         if(!$actuPeriscolaire){
             $actuPeriscolaire = new Actu();
-
         }
         $form = $this->createForm(ActuType::class,$actuPeriscolaire);
         $form->handleRequest($request);
@@ -195,8 +198,8 @@ class AdminController extends AbstractController
                     break;
             };
             $actuPeriscolaire->setCategorie($categorie);
-            $om->persist($actuPeriscolaire);
-            $om->flush();
+            $em->persist($actuPeriscolaire);
+            $em->flush();
             $this->addFlash('success',"L'action a été éffectuée");
             return $this->redirectToRoute("admin_periscolaire");
         }
@@ -207,17 +210,21 @@ class AdminController extends AbstractController
     }
     
     /** 
-     * @Route("/periscolaire/{id}",name="suppActuPeriscolaire", methods="SUP")
-     */
-   public function suppressionActuPeriscolaire(Actu $actuPeriscolaire,Request $request,EntityManagerInterface $om){
+    * @Route("/periscolaire/{id}",name="suppActuPeriscolaire", methods="SUP")
+    */
+   public function suppressionActuPeriscolaire(Actu $actuPeriscolaire,Request $request,EntityManagerInterface $em){
        if($this->isCsrfTokenValid("SUP".$actuPeriscolaire->getId(),$request->get("_token"))){
-           $om->remove($actuPeriscolaire);
-           $om->flush();
+           $em->remove($actuPeriscolaire);
+           $em->flush();
            $this->addFlash('success',"L'action a été effectuée");
            return $this->redirectToRoute("admin_periscolaire");
        }
    }
-   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Partie Admin TAP //////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
     * @Route("/tap", name="admin_tap")
     */
@@ -235,15 +242,14 @@ class AdminController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/creationActuTap", name="creationActuTap")
-     * @Route("/tap/{id}",name="modificationActuTap",methods="GET|POST")
-     */
-    public function modificationActuTap(Actu $actuTap = null, Request $request,EntityManagerInterface $om)
+    /**
+    * @Route("/creationActuTap", name="creationActuTap")
+    * @Route("/tap/{id}",name="modificationActuTap",methods="GET|POST")
+    */
+    public function modificationActuTap(Actu $actuTap = null, Request $request,EntityManagerInterface $em)
     {
         if(!$actuTap){
             $actuTap = new Actu();
-
         }
         $form = $this->createForm(ActuType::class,$actuTap);
         $form->handleRequest($request);
@@ -257,8 +263,8 @@ class AdminController extends AbstractController
                     break;
             };
             $actuTap->setCategorie($categorie);
-            $om->persist($actuTap);
-            $om->flush();
+            $em->persist($actuTap);
+            $em->flush();
             $this->addFlash('success',"L'action a été éffectuée");
             return $this->redirectToRoute("admin_periscolaire");
         }
@@ -269,17 +275,21 @@ class AdminController extends AbstractController
     }
     
     /** 
-     * @Route("/tap/{id}",name="suppActuTap", methods="SUP")
-     */
-   public function suppressionActuTap(Actu $actuTap,Request $request,EntityManagerInterface $om){
+    * @Route("/tap/{id}",name="suppActuTap", methods="SUP")
+    */
+   public function suppressionActuTap(Actu $actuTap,Request $request,EntityManagerInterface $em){
        if($this->isCsrfTokenValid("SUP".$actuTap->getId(),$request->get("_token"))){
-           $om->remove($actuTap);
-           $om->flush();
+           $em->remove($actuTap);
+           $em->flush();
            $this->addFlash('success',"L'action a été effectuée");
            return $this->redirectToRoute("admin_periscolaire");
        }
    }
- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Partie Admin Parents //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
     * @Route("/parents", name="admin_parents")
     */
@@ -301,12 +311,10 @@ class AdminController extends AbstractController
      * @Route("/creationActuParents", name="creationActuParents")
      * @Route("/parents/{id}",name="modificationActuParents",methods="GET|POST")
      */
-    public function modificationActuParents(Actu $actuParents = null, Request $request,EntityManagerInterface $om)
+    public function modificationActuParents(Actu $actuParents = null, Request $request,EntityManagerInterface $em)
     {
         if(!$actuParents){
             $actuParents = new Actu();
-           
-
         }
         $form = $this->createForm(ActuType::class,$actuParents);
         $form->handleRequest($request);
@@ -320,8 +328,8 @@ class AdminController extends AbstractController
                     break;
             };
             $actuParents->setCategorie($categorie);
-            $om->persist($actuParents);
-            $om->flush();
+            $em->persist($actuParents);
+            $em->flush();
             $this->addFlash('success',"L'action a été éffectuée");
             return $this->redirectToRoute("admin_parents");
         }
@@ -332,20 +340,22 @@ class AdminController extends AbstractController
     }
     
     /** 
-     * @Route("/parents/{id}",name="suppActuParents", methods="SUP")
-     */
-   public function suppressionActuParents(Actu $actuParents,Request $request,EntityManagerInterface $om){
-       if($this->isCsrfTokenValid("SUP".$actuParents->getId(),$request->get("_token"))){
-           $om->remove($actuParents);
-           $om->flush();
+    * @Route("/parents/{id}",name="suppActuParents", methods="SUP")
+    */
+    public function suppressionActuParents(Actu $actuParents,Request $request,EntityManagerInterface $em){
+        if($this->isCsrfTokenValid("SUP".$actuParents->getId(),$request->get("_token"))){
+           $em->remove($actuParents);
+           $em->flush();
            $this->addFlash('success',"L'action a été effectuée");
            return $this->redirectToRoute("admin_parents");
        }
    }
- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Partie Admin Conseil //////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   /**
+    /**
     * @Route("/choix_conseil", name="choix_admin_conseil")
     */
     public function choixAdminConseil(QuestionRepository $questionRepository)
@@ -372,16 +382,14 @@ class AdminController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/creationActuConseil", name="creationActuConseil")
-     * @Route("/conseil/{id}",name="modificationActuConseil",methods="GET|POST")
-     */
-    public function modificationActuConseil(Actu $actuConseil = null, Request $request,EntityManagerInterface $om)
+    /**
+    * @Route("/creationActuConseil", name="creationActuConseil")
+    * @Route("/conseil/{id}",name="modificationActuConseil",methods="GET|POST")
+    */
+    public function modificationActuConseil(Actu $actuConseil = null, Request $request,EntityManagerInterface $em)
     {
         if(!$actuConseil){
             $actuConseil = new Actu();
-           
-
         }
         $form = $this->createForm(ActuType::class,$actuConseil);
         $form->handleRequest($request);
@@ -395,8 +403,8 @@ class AdminController extends AbstractController
                     break;
             };
             $actuConseil->setCategorie($categorie);
-            $om->persist($actuConseil);
-            $om->flush();
+            $em->persist($actuConseil);
+            $em->flush();
             $this->addFlash('success',"L'action a été éffectuée");
             return $this->redirectToRoute("admin_conseil");
         }
@@ -407,19 +415,21 @@ class AdminController extends AbstractController
     }
     
     /** 
-     * @Route("/conseil/{id}",name="suppActuConseil", methods="SUP")
-     */
-   public function suppressionActuConseil(Actu $actuConseil,Request $request,EntityManagerInterface $om){
+    * @Route("/conseil/{id}",name="suppActuConseil", methods="SUP")
+    */
+   public function suppressionActuConseil(Actu $actuConseil,Request $request,EntityManagerInterface $em){
        if($this->isCsrfTokenValid("SUP".$actuConseil->getId(),$request->get("_token"))){
-           $om->remove($actuConseil);
-           $om->flush();
+           $em->remove($actuConseil);
+           $em->flush();
            $this->addFlash('success',"L'action a été effectuée");
            return $this->redirectToRoute("admin_conseil");
        }
    }
-   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Partie Admin Questions ////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
     /**
     * @Route("/questions", name="admin_questions")
     */
@@ -428,12 +438,9 @@ class AdminController extends AbstractController
         $question = new Question();
         $question->setCreatedAt(new \DateTime('now'));
         $form = $this->createForm(QuestionType::class, $question);
-         
         $form->handleRequest($request);
-         
         if ($form->isSubmitted() && $form->isValid()) {
             $question->setUtilisateur($this->getUser());
- 
             $manager->persist($question);
             $manager->flush();
             $this->addFlash('success',"Votre question a bien été enregistrée, nous vous repondrons dès que possible.
@@ -451,16 +458,13 @@ class AdminController extends AbstractController
     }
     
     /**
-     * @Route("/question/repondre/{id}", name="admin_question_show")
-     */
-    public function show(Question $question, Request $request,EntityManagerInterface $manager,QuestionRepository $questionRepository,ReponseRepository $reponseRepository)
+    * @Route("/question/repondre/{id}", name="admin_question_show")
+    */
+    public function show(Question $question, Request $request,EntityManagerInterface $manager,ReponseRepository $reponseRepository)
     {
         $reponse = new Reponse();
- 
         $form = $this->createForm(ReponseType::class, $reponse);
-         
         $form->handleRequest($request);
-     
         if ($form->isSubmitted() && $form->isValid()) {
             $reponse->setCreatedAt(new \DateTime())
                     ->setQuestion($question)
@@ -477,18 +481,14 @@ class AdminController extends AbstractController
         return $this->render('questions/partials/_reponse.html.twig', [
             "question" => $question,
             'form'=>$form->createView(),
-            //On le met a 1 pour pouvoir afficher "1 question a déjà été posée lol"
-            /*
-             TODO :
-
-            */
+            //On le met a 1 pour pouvoir afficher "1 question a déjà été posée"
              'nb_questions'=>1
         ]);
     }
 
     /**
-     * @Route("/question/questions_sans_reponse", name="admin_questions_sans_reponse")
-     */
+    * @Route("/question/questions_sans_reponse", name="admin_gestion_questions")
+    */
     public function questions_sans_reponses(QuestionRepository $repo){
         $questions=$repo->findAll();
         return $this->render('questions/partials/_questions_sans_reponse.html.twig',[
@@ -498,48 +498,51 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/question/edit/{id}", name="edit_question")
-     */
+    * @Route("/question/edit/{id}", name="edit_question")
+    */
     public function edit_question(Question $question, Request $request, EntityManagerInterface $em){
         $form = $this->createForm(QuestionType::class, $question);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
-            return $this->redirectToRoute('admin_questions_sans_reponse');
+            return $this->redirectToRoute('admin_gestion_questions');
         }
         return $this->render('questions/partials/_edit.html.twig', ['form'=>$form->createView()]);
     }
 
     /**
-     * @Route("/admin/{id}", name="supQuestion",methods="SUP")
-     */
-    public function suppressionQuestion(Question $question = null,Request $request,EntityManagerInterface $entityManager)
+    * @Route("/admin/{id}", name="supQuestion",methods="SUP")
+    */
+    public function suppressionQuestion(Question $question = null,Request $request,EntityManagerInterface $em)
     {
         if ($this->isCsrfTokenValid("SUP".$question->getId(),$request->get("_token"))){
-            $entityManager->remove($question);
-            $entityManager->flush();
-            $this->addFlash('success',"l'action a été effectuée");
-            return $this->redirectToRoute("questions");
-        }
-    }
-      /**
-     * @Route("/admin/{id}", name="supReponse",methods="SUP")
-     */
-    public function suppressionReponse(Reponse $reponse = null,Request $request,EntityManagerInterface $entityManager)
-    {
-        if ($this->isCsrfTokenValid("SUP".$reponse->getId(),$request->get("_token"))){
-            $entityManager->remove($reponse);
-            $entityManager->flush();
+            $em->remove($question);
+            $em->flush();
             $this->addFlash('success',"l'action a été effectuée");
             return $this->redirectToRoute("questions");
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
-     * @Route("/infos_pratiques", name="admin_infos_pratiques",methods="GET|POST")
-     */
+    * @Route("/admin/{id}", name="supReponse",methods="SUP")
+    */
+    public function suppressionReponse(Reponse $reponse = null,Request $request,EntityManagerInterface $em)
+    {
+        if ($this->isCsrfTokenValid("SUP".$reponse->getId(),$request->get("_token"))){
+            $em->remove($reponse);
+            $em->flush();
+            $this->addFlash('success',"l'action a été effectuée");
+            return $this->redirectToRoute("questions");
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Partie Admin Infos Pratiques //////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+    * @Route("/infos_pratiques", name="admin_infos_pratiques",methods="GET|POST")
+    */
     public function infosPratiques(Contact $contact = null,Request $request,EntityManagerInterface $em, ContactRepository $contactRepository)
     {
         $contact = new Contact();
@@ -560,12 +563,12 @@ class AdminController extends AbstractController
     }
     
     /** 
-     * @Route("/infos_pratiques/{id}",name="suppMsg", methods="SUP")
-     */
-   public function suppressionMessage(Contact $contact,Request $request,EntityManagerInterface $om){
+    * @Route("/infos_pratiques/{id}",name="suppMsg", methods="SUP")
+    */
+   public function suppressionMessage(Contact $contact,Request $request,EntityManagerInterface $em){
        if($this->isCsrfTokenValid("SUP".$contact->getId(),$request->get("_token"))){
-           $om->remove($contact);
-           $om->flush();
+           $em->remove($contact);
+           $em->flush();
            $this->addFlash('success',"L'action a été effectuée");
            return $this->redirectToRoute("admin_infos_pratiques");
        }

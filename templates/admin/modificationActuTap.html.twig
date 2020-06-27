@@ -2,20 +2,14 @@
 
 {% block title %}Modification de l'actualité TAP !{% endblock %}
 
-
-
-
-
 {% block body %}
-
 
 {{form_start(form)}}
 
     {{form_widget(form)}}
-    <a href="{{path('admin_tap')}}" class="btn btn-primary">Retour</a>
-    <input type="submit" value="valider" class="btn btn-success">
+        <a href="{{path('admin_tap')}}" class="btn btn-primary">Retour</a>
+        <input type="submit" value="valider" class="btn btn-success">
+
 {{form_end(form)}}
-
-
 
 {% endblock %}

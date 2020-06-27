@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
  */
 class Contact
 {
-
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('phone', new Assert\Regex([

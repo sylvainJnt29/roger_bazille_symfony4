@@ -17,20 +17,12 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // ->add('created_at',DateTimeType::class,[
-            //     'data' => new \DateTime('now'),
-            //     'row_attr'=>['hidden']
-            //     ])
+            // ->add('created_at')
             ->add('question',TextareaType::class,[
                 'label'=>'Votre question',
                 'attr'=>['placeholder'=>'Ecrivez ici votre question']
             ])
-            // ->add('utilisateur',TextType::class,[
-            //     'label'=>'Votre nom',
-            //     'attr'=>['placeholder'=>'Votre nom'],
-            //     'constraints'=>[new NotBlank()]
-            // ])
-
+            // ->add('utilisateur')
         ;
     }
 

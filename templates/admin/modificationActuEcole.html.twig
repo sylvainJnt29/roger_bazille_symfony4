@@ -2,20 +2,12 @@
 
 {% block title %}Modification de l'actualité des professeurs !{% endblock %}
 
-
-
-
-
 {% block body %}
 <div id="ecole">
-
-{{form_start(form)}}
-
-    {{form_widget(form)}}
-    <a href="{{path('admin_ecole')}}" class="btn btn-primary">Retour</a>
-    <input type="submit" value="valider" class="btn btn-success">
-{{form_end(form)}}
-
-
+    {{form_start(form)}}
+        {{form_widget(form)}}
+            <a href="{{path('admin_ecole')}}" class="btn btn-primary">Retour</a>
+            <input type="submit" value="valider" class="btn btn-success">
+    {{form_end(form)}}
 </div>
 {% endblock %}

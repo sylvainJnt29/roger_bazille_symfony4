@@ -91,7 +91,7 @@ body #img_fond_accueil{
     background-color: rgba(255, 255, 240, 0.493);
     margin: auto;
     text-align: center;
-    border-radius: 15%;
+
     border:solid black 2px ;
     margin-left: 30%;
     margin-right: 30%;
@@ -99,8 +99,9 @@ body #img_fond_accueil{
     text-decoration: none;
     box-shadow: 0 0 10px rgba(0,0,0,0.60);
 }
-#choix_mairie a,#choix_mairie a{
+#choix_mairie a{
     text-decoration: none;
+    color: black;
 }
 h1{
     background-color: rgba(255, 255, 240, 0.479);
@@ -108,7 +109,7 @@ h1{
     border:solid black 2px ;
     box-shadow: 0 0 10px rgba(0,0,0,0.60);
 }
-#contactForm,#question,#prout,#response{
+#contactForm,#question,#mep_cantine,#response{
     background-color: rgba(255, 255, 240, 0.479);
     border:solid white 2px ;
     box-shadow: 0 0 10px rgba(0,0,0,0.60);
@@ -173,5 +174,5 @@ footer a,p{
 }
 #titreInfosPratiques{
     margin-top: 15%;
-    margin-bottom: 18%;
+    margin-bottom: 28%;
 }

@@ -20,7 +20,8 @@ class ActuType extends AbstractType
             ->add('created_at',DateTimeType::class,['data' => new \DateTime('now')])
             ->add('titre')
             ->add('article')
-            ->add('imageFile',FileType::class,['required'=>false]);
+            ->add('imageFile',FileType::class,['required'=>false])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -2,17 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\ActuRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Repository\ActuRepository;
 use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-
 /**
- * @ORM\Entity(repositoryClass=ActuRepository::class)
- * @Vich\Uploadable
- */
+* @ORM\Entity(repositoryClass=ActuRepository::class)
+* @Vich\Uploadable
+*/
 class Actu
 {
     /**
@@ -116,7 +115,7 @@ class Actu
     }
     public function setImageFile(?File $imageFile = null): self
     {
-         $this->imageFile = $imageFile;
+        $this->imageFile = $imageFile;
         
         if ($this->imageFile instanceof UploadedFile) {
             $this->updated_at = new \DateTime('now');

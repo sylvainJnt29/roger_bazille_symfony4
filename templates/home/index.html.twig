@@ -2,10 +2,7 @@
 
 {% block title %}Bienvenue !{% endblock %}
 
-
-
 {% block body %}
-
 
 <div id="img_fond_accueil">
     <div class="container text text-center pt-5">
@@ -16,12 +13,13 @@
             </p>
             <hr class="my-5">
             <p class="lead">
-            <a href="{{path('ecole')}}" class="btn btn-primary" role="button">
-                <i class="fas fa-info-circle"></i>
-                Entrez
-            </a>
+                <a href="{{path('ecole')}}" class="btn btn-primary" role="button">
+                    <i class="fas fa-info-circle"></i>
+                    Entrez
+                </a>
             </p>
-    
+        </div>
     </div>
 </div>
+
 {% endblock %}

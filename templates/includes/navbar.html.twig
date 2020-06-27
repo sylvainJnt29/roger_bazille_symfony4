@@ -1,5 +1,3 @@
-
-
 <nav class="navbar navbar-expand-sm navbar-light bg-info" id="navbar">
   <a class="navbar-brand" href="{{ path('home') }}">Ecole Roger Bazille</a>
   <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
@@ -76,12 +74,14 @@
           <a class="dropdown-item" href="{{path('infos_pratiques')}}">Infos pratiques</a>
           {% if is_granted('ROLE_ADMIN') %}
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{path('admin_infos_pratiques')}}">Espace administration des infos pratiques</a>
+            <a class="dropdown-item" href="{{path('admin_infos_pratiques')}}">
+              Espace administration des infos pratiques
+              {#{% if messageRecus > 0 %}
+                <span class="badge badge-danger m-1">{{ messageRecus }}</span>
+              {% endif %}#}
+            </a>
           {% endif %}
       </li>
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="{{path('infos_pratiques')}}">Infos pratiques</a>
-      </li> -->
     </ul>
     {% if user %}
       <span class="" id="connection">

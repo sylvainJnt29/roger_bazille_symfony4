@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
     <div class="container">
         {% for message in app.flashes('success') %}
@@ -9,7 +7,7 @@
                 {{message}}
             </div>
         {% endfor %}
-        <h1 class="text-center" id="titreInfosPratiques">Retrouvez ici les messages reçus :</h1>
+        <h1 class="mt-4 p-2 text-center" id="titreInfosPratiques">Retrouvez ici les messages reçus :</h1>
         {% for messageRecu in messageRecus %}
             <div id="contactForm" class="mt-5">    
                 <div class="col"><b>Prénom :</b></div>

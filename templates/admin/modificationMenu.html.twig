@@ -1,31 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modification des menus !{% endblock %}
-
-
-
-
+{% block title %}Modification des menus{% endblock %}
 
 {% block body %}
 
-<div id="menu">
-
-{{form_start(form)}}
-
-
-    
-
-
-
+<div class="container mt-2 p-2">
+    <h1 class="mt-2 text-center">Modification des menus</h1>
+    {{form_start(form)}}
     {{form_widget(form)}}
-
-
-    <a href="{{path('admin_cantine')}}" class="btn btn-primary">Retour</a>
-
-
-    <input type="submit" value="valider" class="btn btn-success">
-{{form_end(form)}}
-
+        <div class="mt-2 text-center">
+            <a href="{{path('admin_cantine')}}" class="btn btn-primary">Retour</a>
+            <input type="submit" value="valider" class="btn btn-success">
+        </div>
+    {{form_end(form)}}
 
 </div>
 {% endblock %}

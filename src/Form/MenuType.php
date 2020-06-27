@@ -16,7 +16,7 @@ class MenuType extends AbstractType
             ->add('tarifAbonne')
             ->add('tarifPassager')
             ->add('imageFile',FileType::class,['required'=>false])
-            ;
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -11,14 +11,12 @@ use App\Repository\ReponseRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class QuestionController extends AbstractController
 {
-
     /**
     * @Route("/questions", name="questions")
     */
@@ -27,12 +25,9 @@ class QuestionController extends AbstractController
         $question = new Question();
         $question->setCreatedAt(new \DateTime('now'));
         $form = $this->createForm(QuestionType::class, $question);
-         
         $form->handleRequest($request);
-         
         if ($form->isSubmitted() && $form->isValid()) {
             $question->setUtilisateur($this->getUser());
- 
             $manager->persist($question);
             $manager->flush();
             $this->addFlash('success',"Votre question a bien été enregistrée, nous vous repondrons dès que possible.
@@ -50,16 +45,13 @@ class QuestionController extends AbstractController
     }
     
     /**
-     * @Route("/question/repondre/{id}", name="question_show")
-     */
+    * @Route("/question/repondre/{id}", name="question_show")
+    */
     public function show(Question $question, Request $request,EntityManagerInterface $manager,QuestionRepository $questionRepository,ReponseRepository $reponseRepository)
     {
         $reponse = new Reponse();
- 
         $form = $this->createForm(ReponseType::class, $reponse);
-         
         $form->handleRequest($request);
-     
         if ($form->isSubmitted() && $form->isValid()) {
             $reponse->setCreatedAt(new \DateTime())
                     ->setQuestion($question)
@@ -76,12 +68,8 @@ class QuestionController extends AbstractController
         return $this->render('questions/partials/_reponse.html.twig', [
             "question" => $question,
             'form'=>$form->createView(),
-            //On le met a 1 pour pouvoir afficher "1 question a déjà été posée lol"
-            /*
-             TODO :
-
-            */
-             'nb_questions'=>1
+            //On le met a 1 pour pouvoir afficher "1 question a déjà été posée"
+            'nb_questions'=>1
         ]);
     }
 

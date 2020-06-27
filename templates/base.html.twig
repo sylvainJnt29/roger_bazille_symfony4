@@ -6,25 +6,14 @@
         <script src="https://kit.fontawesome.com/22d71e1744.js" crossorigin="anonymous"></script>
         {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
     </head>
-   
-        
-
+    <body>
         {% block header %}{% endblock %}
         {% include 'includes/banniere.html.twig' %}
         {% block main %}{% endblock %}
         {{ render(controller("App\\Controller\\HeaderController::index")) }}
         {% block footer %}{% endblock %}
-      
-      
-   
-     
         {% block body %}{% endblock %}
-
         {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
-      
         {% include 'includes/footbar.html.twig' %}
-        
     </body>
-    
-
 </html>

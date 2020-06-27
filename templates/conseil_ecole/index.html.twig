@@ -1,64 +1,52 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
-<h1 class="my-5 text-center">Retrouvez ici les articles du conseil d'école:</h1>
-{% for message in app.flashes('success') %}
-
-<div class="alert alert-success">
-    {{message}}
-</div>
-    
-{% endfor %}
-{% for actuConseil in actusConseil %}
-
 <div class="container">
+    <h1 class="my-5 text-center">Retrouvez ici les articles du conseil d'école:</h1>
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% for actuConseil in actusConseil %}
     <div class="my-5 text-center">
-                                    {% if ROLE_ADMIN or ROLE_USER_CONSEIL  %}
-
-                                 <a href="{{path('creationActuConseil')}}" class="col btn btn-success">Ajouter une nouvelle actualite périscolaire</a>     
-                            {% endif %}
-          
-                    <div class="my-5 text-center">
-                        <div class="card profile-card-5">
-                            <div class="card-img-block">
-                                <img class="card-img-top" src="{{asset('images/docs/' ~ actuConseil.image)}}" alt="image article conseil"/>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-date">
-                                    Date de l'article :
-                                {{actuConseil.createdAt|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y')}}
-                                </h5>
-                                 <h5 class="card-title">
-                                {{actuConseil.titre}}
-                                </h5>
-                                    <p class="card-text">
-                                {{actuConseil.article}}
-                                    </p>
-
-                            </div>
-                            {% if ROLE_ADMIN or ROLE_USER_CONSEIL  %}
-                                <div class="row no-gutters">
-                                    <a href="{{path('modificationActuConseil',{'id' : actuConseil.id})}}" class="col btn btn-warning">Modifier</a>
-                                    <form method="post" class="col" action="{{path('suppActuConseil',{'id':actuConseil.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer le menu?')">
-                                        <input type="hidden" name="_method" value="SUP">
-                                        <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ actuConseil.id)}}">
-                                        <input type="submit" class="btn btn-danger w-100" value="supprimer">
-                                    </form>
-                                </div>
-                            {% endif %}                    
-                                               
-                        </div> 
-</div>
-</div>
-</div>
-
-
-
-{% endfor %}
-<div class="navigation justify-content-center">
-    {{ knp_pagination_render(actusConseil) }}
+        {% if ROLE_ADMIN or ROLE_USER_CONSEIL  %}
+            <a href="{{path('creationActuConseil')}}" class="col btn btn-success">Ajouter une nouvelle actualite périscolaire</a>     
+        {% endif %}
+        <div class="my-5 text-center">
+            <div class="card profile-card-5">
+                <div class="card-img-block">
+                    <img class="card-img-top" src="{{asset('images/docs/' ~ actuConseil.image)}}" alt="image article conseil"/>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-date">
+                        Date de l'article :
+                        {{actuConseil.createdAt|localizeddate('none', 'none', 'fr', null, 'EEEE d MMMM Y')}}
+                    </h5>
+                    <h5 class="card-title">
+                        {{actuConseil.titre}}
+                    </h5>
+                    <p class="card-text">
+                        {{actuConseil.article}}
+                    </p>
+                </div>
+                {% if ROLE_ADMIN or ROLE_USER_CONSEIL  %}
+                <div class="row no-gutters">
+                    <a href="{{path('modificationActuConseil',{'id' : actuConseil.id})}}" class="col btn btn-warning">Modifier</a>
+                    <form method="post" class="col" action="{{path('suppActuConseil',{'id':actuConseil.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer le menu?')">
+                    <input type="hidden" name="_method" value="SUP">
+                    <input type="hidden" name="_token" value="{{csrf_token('SUP' ~ actuConseil.id)}}">
+                    <input type="submit" class="btn btn-danger w-100" value="supprimer">
+                    </form>
+                </div>
+                {% endif %}                    
+            </div> 
+        </div>
+    </div>
+    {% endfor %}
+        <div class="navigation justify-content-center">
+        {{ knp_pagination_render(actusConseil) }}
+        </div>
 </div>
 
 {% endblock %}
