@@ -10,7 +10,7 @@
     {% endfor %}
     {% for actuParent in actusParents %}    
     <div class="my-5 text-center">
-        {% if ROLE_ADMIN or ROLE_USER_PARENT  %}
+        {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_PARENT  %}
         <a href="{{path('creationActuParents')}}" class="col btn btn-success">Ajouter une nouvelle actualite périscolaire</a>     
         {% endif %}       
         <div class="my-5 text-center">
@@ -30,7 +30,7 @@
                         {{actuParent.article}}
                     </p>
                 </div>
-                {% if ROLE_ADMIN or ROLE_USER_PARENT  %}
+                {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_PARENT  %}
                 <div class="row no-gutters">
                     <a href="{{path('modificationActuParents',{'id' : actuParent.id})}}" class="col btn btn-warning">Modifier</a>
                     <form method="post" class="col" action="{{path('suppActuParents',{'id':actuParent.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer le menu?')">

@@ -20,7 +20,7 @@
                 <div class="col">{{messageRecu.email}}</div>
                 <div class="col"><b>Message :</b></div>
                 <div class="col">{{messageRecu.message}}<hr></div>         
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted('ROLE_ADMIN_MASTER') %}
                     <div class="row no-gutters">
                         <form method="post" class="col" action="{{path('suppMsg',{'id':messageRecu.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer l\'article?')">
                             <input type="hidden" name="_method" value="SUP">

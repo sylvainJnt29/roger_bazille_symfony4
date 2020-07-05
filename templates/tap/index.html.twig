@@ -11,7 +11,7 @@
 {% for actuTap in actusTap %}
 <div class="container">
     <div class="my-5 text-center">
-    {% if ROLE_ADMIN or ROLE_USER_MAIRIE  %}
+    {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_MAIRIE  %}
         <a href="{{path('creationActuTap')}}" class="col btn btn-success">Ajouter un nouvel article</a>
     {% endif %}
 
@@ -32,7 +32,7 @@
                     {{actuTap.article}}
                 </p>
             </div>
-            {% if ROLE_ADMIN or ROLE_USER_MAIRIE  %}
+            {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_MAIRIE  %}
             <div class="row no-gutters">
                 <a href="{{path('modificationActuTap',{'id' : actuTap.id})}}" class="col btn btn-warning">Modifier</a>
                 <form method="post" class="col" action="{{path('suppActuTap',{'id':actuTap.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer l\'article?')">

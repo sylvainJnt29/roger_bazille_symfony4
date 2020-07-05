@@ -10,7 +10,7 @@
     {% endfor %}
     {% for actuConseil in actusConseil %}
     <div class="my-5 text-center">
-        {% if ROLE_ADMIN or ROLE_USER_CONSEIL  %}
+        {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_CONSEIL  %}
             <a href="{{path('creationActuConseil')}}" class="col btn btn-success">Ajouter une nouvelle actualite périscolaire</a>     
         {% endif %}
         <div class="my-5 text-center">
@@ -30,7 +30,7 @@
                         {{actuConseil.article}}
                     </p>
                 </div>
-                {% if ROLE_ADMIN or ROLE_USER_CONSEIL  %}
+                {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_CONSEIL  %}
                 <div class="row no-gutters">
                     <a href="{{path('modificationActuConseil',{'id' : actuConseil.id})}}" class="col btn btn-warning">Modifier</a>
                     <form method="post" class="col" action="{{path('suppActuConseil',{'id':actuConseil.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer le menu?')">

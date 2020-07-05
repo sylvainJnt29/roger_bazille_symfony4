@@ -46,7 +46,7 @@ class HomeController extends AbstractController
         return $this->render('infos_pratiques/index.html.twig',[
             'form' => $form->createView(),
             'messageRecus' => $messageRecus,
-            "ROLE_ADMIN" =>false
+            "ROLE_ADMIN_MASTER" =>false
         ]);
     }
     
@@ -62,8 +62,8 @@ class HomeController extends AbstractController
         );
         return $this->render('cantine/index.html.twig', [
             'menus' => $menus,
-            "ROLE_ADMIN" =>false,
-            "ROLE_USER_MAIRIE" =>false
+            "ROLE_ADMIN_MASTER" =>false,
+            "ROLE_ADMIN_MAIRIE" =>false
         ]);
     }
     /**
@@ -78,8 +78,8 @@ class HomeController extends AbstractController
         );
         return $this->render('conseil_ecole/index.html.twig', [
             'actusConseil' => $actusConseil,
-            "ROLE_ADMIN" =>false,
-            "ROLE_USER_CONSEIL" =>false
+            "ROLE_ADMIN_MASTER" =>false,
+            "ROLE_ADMIN_CONSEIL" =>false
         ]);
     }
 
@@ -95,8 +95,8 @@ class HomeController extends AbstractController
         );
         return $this->render('ecole/index.html.twig', [
             "actu" => $actu,
-            "ROLE_ADMIN" =>false,
-            "ROLE_USER_PROF" =>false
+            "ROLE_ADMIN_MASTER" =>false,
+            "ROLE_ADMIN_PROF" =>false
         ]);
     }
     /**
@@ -111,8 +111,8 @@ class HomeController extends AbstractController
         );
         return $this->render('parents_eleves/index.html.twig', [
             'actusParents' => $actuParents,
-            "ROLE_ADMIN" =>false,
-            "ROLE_USER_PARENT" =>false
+            "ROLE_ADMIN_MASTER" =>false,
+            "ROLE_ADMIN_PARENT" =>false
         ]);
     }
     /**
@@ -127,8 +127,8 @@ class HomeController extends AbstractController
         );
         return $this->render('periscolaire/index.html.twig', [
             'actuPeriscolaire' => $actuPeriscolaire,
-            "ROLE_ADMIN" =>false,
-            "ROLE_USER_MAIRIE" =>false
+            "ROLE_ADMIN_MASTER" =>false,
+            "ROLE_ADMIN_MAIRIE" =>false
         ]);
     }
 
@@ -152,8 +152,8 @@ class HomeController extends AbstractController
         );
         return $this->render('tap/index.html.twig', [
             'actusTap' => $tap,
-            "ROLE_ADMIN" =>false,
-            "ROLE_USER_MAIRIE" =>false
+            "ROLE_ADMIN_MASTER" =>false,
+            "ROLE_ADMIN_MAIRIE" =>false
      
         ]);
     }

@@ -69,6 +69,9 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Infos pratiques
+          {% if nb_contacts > 0 and user and (user.role.label == 'ROLE_ADMIN_MASTER') %}
+            <span class="badge badge-danger m-1">{{ nb_contacts }}</span>
+          {% endif %}
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownId">
           <a class="dropdown-item" href="{{path('infos_pratiques')}}">Infos pratiques</a>

@@ -45,8 +45,8 @@ class AdminController extends AbstractController
         );
         return $this->render('ecole/index.html.twig',[
             "actu" => $actu,
-            "ROLE_ADMIN" =>true,
-            "ROLE_USER_PROF" =>true
+            "ROLE_ADMIN_MASTER" =>true,
+            "ROLE_ADMIN_PROF" =>true
         ]);
     }
 
@@ -118,8 +118,8 @@ class AdminController extends AbstractController
         );
         return $this->render('cantine/index.html.twig', [
             "menus" => $menu,
-            "ROLE_ADMIN" =>true,
-            "ROLE_USER_PROF" =>true
+            "ROLE_ADMIN_MASTER" =>true,
+            "ROLE_ADMIN_PROF" =>true
         ]);
     }
 
@@ -174,8 +174,8 @@ class AdminController extends AbstractController
         );
         return $this->render('periscolaire/index.html.twig', [
             "actuPeriscolaire" => $actuPeriscolaire,
-            "ROLE_ADMIN" =>true,
-            "ROLE_USER_MAIRIE" =>true
+            "ROLE_ADMIN_MASTER" =>true,
+            "ROLE_ADMIN_MAIRIE" =>true
         ]);
     }
 
@@ -192,10 +192,10 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             switch($this->getUser()->getRoles()[0]){
-                case 'ROLE_ADMIN': 
+                case 'ROLE_ADMIN_MASTER': 
                     $categorie = 'periscolaire';
                     break;
-                case 'ROLE_USER_MAIRIE':
+                case 'ROLE_ADMIN_MAIRIE':
                     $categorie = 'periscolaire';
                     break;
             };
@@ -239,8 +239,8 @@ class AdminController extends AbstractController
         );
         return $this->render('tap/index.html.twig', [
             "actusTap" => $actuTap,
-            "ROLE_ADMIN" =>true,
-            "ROLE_USER_MAIRIE" =>true
+            "ROLE_ADMIN_MASTER" =>true,
+            "ROLE_ADMIN_MAIRIE" =>true
         ]);
     }
 
@@ -257,10 +257,10 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             switch($this->getUser()->getRoles()[0]){
-                case 'ROLE_ADMIN': 
+                case 'ROLE_ADMIN_MASTER': 
                     $categorie = 'periscolaire';
                     break;
-                case 'ROLE_USER_MAIRIE':
+                case 'ROLE_ADMIN_MAIRIE':
                     $categorie = 'periscolaire';
                     break;
             };
@@ -304,8 +304,8 @@ class AdminController extends AbstractController
         );
         return $this->render('parents_eleves/index.html.twig', [
             "actusParents" => $actuParents,
-            "ROLE_ADMIN" =>true,
-            "ROLE_USER_MAIRIE" =>true
+            "ROLE_ADMIN_MASTER" =>true,
+            "ROLE_ADMIN_MAIRIE" =>true
         ]);
     }
 
@@ -322,10 +322,10 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             switch($this->getUser()->getRoles()[0]){
-                case 'ROLE_ADMIN': 
+                case 'ROLE_ADMIN_MASTER': 
                     $categorie = 'parent';
                     break;
-                case 'ROLE_USER_PARENT':
+                case 'ROLE_ADMIN_PARENT':
                     $categorie = 'parent';
                     break;
             };
@@ -379,8 +379,8 @@ class AdminController extends AbstractController
         );
         return $this->render('conseil_ecole/index.html.twig', [
             "actusConseil" => $actusConseil,
-            "ROLE_ADMIN" =>true,
-            "ROLE_USER_CONSEIL" =>true
+            "ROLE_ADMIN_MASTER" =>true,
+            "ROLE_ADMIN_CONSEIL" =>true
         ]);
     }
 
@@ -397,10 +397,10 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             switch($this->getUser()->getRoles()[0]){
-                case 'ROLE_ADMIN': 
+                case 'ROLE_ADMIN_MASTER': 
                     $categorie = 'conseil';
                     break;
-                case 'ROLE_USER_CONSEIL':
+                case 'ROLE_ADMIN_CONSEIL':
                     $categorie = 'conseil';
                     break;
             };
@@ -560,7 +560,7 @@ class AdminController extends AbstractController
         return $this->render('infos_pratiques/admin.html.twig',[
             'form' => $form->createView(),
             'messageRecus' => $messageRecus,
-            "ROLE_ADMIN" =>true
+            "ROLE_ADMIN_MASTER" =>true
         ]);
     }
     
@@ -592,7 +592,7 @@ class AdminController extends AbstractController
         
         return $this->render('infos_pratiques/admin.html.twig',[
             'form' => $form->createView(),
-            "ROLE_ADMIN" =>true
+            "ROLE_ADMIN_MASTER" =>true
         ]);
         return $this->render('admin/creationAdmin.html.twig');
     }

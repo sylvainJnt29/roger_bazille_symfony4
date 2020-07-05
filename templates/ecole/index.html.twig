@@ -11,7 +11,7 @@
     <h1 class="mt-4 p-2 text-center">Retrouvez ici les actualités des professeurs</h1>
     {% for actuProf in actu %}
     <div class="my-5 mt-5 text-center">
-        {% if ROLE_ADMIN or ROLE_USER_PROF  %}
+        {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_PROF  %}
         <a href="{{path('creationActuProf')}}" class="col btn btn-success">Ajouter un nouvel article</a>
         {% endif %}       
         <div class="my-5 mt-5 text-center">
@@ -31,7 +31,7 @@
                         {{actuProf.article}}
                     </p>
                 </div>
-                {% if ROLE_ADMIN or ROLE_USER_PROF  %}
+                {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_PROF  %}
                 <div class="row no-gutters">
                     <a href="{{path('modificationActuEcole',{'id' : actuProf.id})}}" class="col btn btn-warning">Modifier</a>
                     <form method="post" class="col" action="{{path('suppActuProf',{'id':actuProf.id})}}" onsubmit="return confirm('Voulez vous vraiement supprimer l\'article?')">

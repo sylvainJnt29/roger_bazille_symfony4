@@ -37,9 +37,9 @@
                     <div class="card profile-card-5">
                         <img class="card-img-top" src="{{asset('images/menu/' ~ menu.cartemenu)}}" alt="image menu"/>
                     </div>
-                    {% if ROLE_ADMIN or ROLE_USER_MAIRIE  %}
+                    {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_MAIRIE  %}
                     <div class="row no-gutters">
-                        {% if ROLE_ADMIN or ROLE_USER_MAIRIE  %}
+                        {% if ROLE_ADMIN_MASTER or ROLE_ADMIN_MAIRIE  %}
                         <a href="{{path('creationMenu')}}" class="col btn btn-success">Ajouter un nouveau menu</a>     
                         {% endif %} 
                         <a href="{{path('modificationMenu',{'id' : menu.id})}}" class="col btn btn-warning">Modifier un menu</a>
