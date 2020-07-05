@@ -258,12 +258,10 @@ class Utilisateur implements UserInterface
     }
 
 
-
-
 public function getRoles(): array
 {
-    // guarantee every user at least has ROLE_USER
-    $roles[] = $this->role->getLabel();
+    
+    $roles[] = $this->role?$this->role->getLabel():[];
 
     return array_unique($roles);
 }
