@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Bienvenue à l'école Roger Bazille !{% endblock %}</title>
         <script src="https://kit.fontawesome.com/22d71e1744.js" crossorigin="anonymous"></script>
-        {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
+        {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}{# <=> <link rel="stylesheet" href="public/build/app.css"> #}
     </head>
     <body>
         {% block header %}{% endblock %}
@@ -13,7 +13,7 @@
         {{ render(controller("App\\Controller\\HeaderController::index")) }}
         {% block footer %}{% endblock %}
         {% block body %}{% endblock %}
-        {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
+        {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}{# <=> <script src='public/build/app.css'></script> #}
         {% include 'includes/footbar.html.twig' %}
     </body>
 </html>

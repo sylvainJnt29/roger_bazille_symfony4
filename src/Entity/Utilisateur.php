@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\COmponent\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -39,11 +39,6 @@ class Utilisateur implements UserInterface
    
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $roles;
-
-    /**
      * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="utilisateur")
      */
     private $menus;
@@ -62,6 +57,11 @@ class Utilisateur implements UserInterface
      * @ORM\OneToMany(targetEntity=Reponse::class, mappedBy="utilisateur")
      */
     private $reponse;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="utilisateurs")
+     */
+    private $role;
 
    
 
@@ -90,17 +90,6 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
     public function eraseCredentials()
     {
         
@@ -109,7 +98,16 @@ class Utilisateur implements UserInterface
     {
         
     }
+    public function getPassword()
+    {
+        return $this->password;
+    }
+    public function setPassword(string $password)
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
 
+        return $this;
+    }
 
     public function getVerifPassword(): ?string
     {
@@ -119,18 +117,6 @@ class Utilisateur implements UserInterface
     public function setVerifPassword(string $verifPassword): self
     {
         $this->verifPassword = $verifPassword;
-
-        return $this;
-    }
-
-    public function getRoles()
-    {
-        return [$this->roles];
-    }
-
-    public function setRoles(string $roles): self
-    {
-        $this->roles = $roles;
 
         return $this;
     }
@@ -259,5 +245,27 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
+    public function setRoles(?Role $role): self
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+
+
+
+public function getRoles(): array
+{
+    // guarantee every user at least has ROLE_USER
+    $roles[] = $this->role->getLabel();
+
+    return array_unique($roles);
+}
    
 }

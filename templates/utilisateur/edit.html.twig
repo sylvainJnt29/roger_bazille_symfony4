@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer l'utilisateur{% endblock %}
+
+{% block body %}
+<div class="container mt-5 mb-5" id="form">
+    <h1 class="text-center mt-3">Editer l'utilisateur</h1>
+    <div class="row  justify-content-center mb-5">
+        {{ include('utilisateur/_form_edit.html.twig', {'button_label': 'Envoyer'}) }}
+    </div>
+</div>
+{% endblock %}

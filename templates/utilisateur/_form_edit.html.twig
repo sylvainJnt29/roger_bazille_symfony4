@@ -1,0 +1,7 @@
+{{ form_start(form_edit) }}
+    {{ form_widget(form_edit) }}
+    <div class="row justify-content-center">
+        <button class="btn btn-success">{{ button_label|default('Editer') }}</button>
+        <a href="{{ path('utilisateur_index') }}" class="btn btn-warning">Retour</a>
+    </div>
+{{ form_end(form_edit) }}

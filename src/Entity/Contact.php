@@ -17,7 +17,7 @@ class Contact
     {
         $metadata->addPropertyConstraint('phone', new Assert\Regex([
             'pattern' => '/^(0|\+33[ ]?)[1-9]([-. ]?[0-9]{2}){3}([-. ]?[0-9]{2})/',
-            'message' => 'prout',
+            'message' => 'Format non valide',
         ]));
     }
 
@@ -59,6 +59,7 @@ class Contact
      * @Assert\NotBlank()
      */
     private $message;
+
 
     public function getId(): ?int
     {

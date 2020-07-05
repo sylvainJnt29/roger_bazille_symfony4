@@ -30,6 +30,8 @@
                     </div>
                 {% endif %}       
             </div> 
+        {% else %}
+            <div class="text-center alert alert-danger">Aucun message à afficher</div>
         {% endfor %}
     </div>
 {% endblock %}

@@ -16,7 +16,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="actu_prof" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ecole</a>
         <div class="dropdown-menu" aria-labelledby="actu_prof">
           <a class="dropdown-item" href="{{path('ecole')}}">Actualités des professeurs</a>
-          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_PROF')%}
+          {% if user and (user.role.label == 'ROLE_ADMIN_MASTER' or user.role.label == 'ROLE_ADMIN_PROF') %}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{path('admin_ecole')}}">Espace professeurs</a>
           {% endif %}
@@ -28,7 +28,7 @@
           <a class="dropdown-item" href="{{path('cantine')}}">Cantine</a>
           <a class="dropdown-item" href="{{path('periscolaire')}}">Accueil Périscolaire</a>
           <a class="dropdown-item" href="{{path('tap')}}">T.A.P</a>
-          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_MAIRIE')%}
+          {% if user and (user.role.label == 'ROLE_ADMIN_MASTER' or user.role.label == 'ROLE_ADMIN_MAIRIE')%}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{path('choix_admin')}}">Espace mairie</a>
           {% endif %}
@@ -40,7 +40,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownId">
           <a class="dropdown-item" href="{{path('parents_eleves')}}">Actualités des parents d'élèves</a>
-          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_PARENT')%}
+          {% if user and (user.role.label == 'ROLE_ADMIN_MASTER' or user.role.label == 'ROLE_ADMIN_PARENT')%}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{path('admin_parents')}}">Espace parents d'élèves</a>
           {% endif %}
@@ -49,14 +49,14 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Conseil d'école
-          {% if nb_questions > 0 and (is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_PROF')) %}
+          {% if nb_questions > 0 and user and (user.role.label == 'ROLE_ADMIN_MASTER' or user.role.label == 'ROLE_ADMIN_PROF') %}
             <span class="badge badge-danger m-1">{{ nb_questions }}</span>
           {% endif %}
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownId">
           <a class="dropdown-item" href="{{path('conseil_ecole')}}">Actualités du conseil d'école</a>
           <a class="dropdown-item" href="{{path('questions')}}">Vos questions</a>
-          {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER_CONSEIL')%}
+          {% if user and (user.role.label == 'ROLE_ADMIN_MASTER' or user.role.label == 'ROLE_ADMIN_CONSEIL')%}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{path('choix_admin_conseil')}}">
               Espace délégués des parents d'élèves 
@@ -72,18 +72,25 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownId">
           <a class="dropdown-item" href="{{path('infos_pratiques')}}">Infos pratiques</a>
-          {% if is_granted('ROLE_ADMIN') %}
+          {% if user and user.role.label == 'ROLE_ADMIN_MASTER' %}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{path('admin_infos_pratiques')}}">
               Espace administration des infos pratiques
-              {#{% if messageRecus > 0 %}
-                <span class="badge badge-danger m-1">{{ messageRecus }}</span>
-              {% endif %}#}
+              {% if nb_contacts > 0 %}
+                <span class="badge badge-danger m-1">{{ nb_contacts }}</span>
+              {% endif %}
             </a>
           {% endif %}
       </li>
     </ul>
-    {% if user %}
+    {% if user  %}
+      {% if user.role.label == 'ROLE_ADMIN_MASTER' %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ path('utilisateur_index') }}">
+                Gérer les utilisateurs
+            </a>
+          </li>
+      {% endif %}
       <span class="" id="connection">
         <a name="login" id="login" class="nav-link" href="{{path('app_logout')}}" role="button">Se déconnecter<br><p class="h6">({{user.username}})</p></a>
       </span>
@@ -92,4 +99,5 @@
     {% endif %}
   </div>
 </nav>
+
 

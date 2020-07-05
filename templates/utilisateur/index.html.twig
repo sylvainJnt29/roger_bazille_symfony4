@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+<div class="container mt-5 mb-5" id="form">
+    <h1 class="text-center mt-3">Utilisateurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for utilisateur in utilisateurs %}
+            <tr>
+                <td>{{ utilisateur.id }}</td>
+                <td>{{ utilisateur.username }}</td>
+                <td>{{ utilisateur.role.label }}</td>
+                <td>
+                    <a href="{{ path('utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-primary">Détails</a>
+                    <a href="{{ path('utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-warning">Editer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Pas d'enregistrements trouvés</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="row justify-content-center mb-3">
+        <a href="{{ path('utilisateur_new') }}" class="btn btn-success">Créer</a>
+    </div>
+</div>
+    
+{% endblock %}

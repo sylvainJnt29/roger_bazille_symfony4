@@ -3,16 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Contact;
+use App\Entity\Reponse;
 use App\Form\ContactType;
 use App\Repository\ActuRepository;
-use App\Repository\ContactRepository;
 use App\Repository\MenuRepository;
+use App\Repository\ContactRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 
 class HomeController extends AbstractController
  {
@@ -158,11 +160,11 @@ class HomeController extends AbstractController
        
     /**
     * @Route("/pass/{pass}")
-    * création d'une méthode de hashage
-    * $2y$10$B8OR9qEX5j3lY5Fg/5lWEO8o64kZmbxi4w3x4nF9SWd7QdORrwKi2 
+    * création d'une méthode de hashage 
     */
-    public function hash_pass($pass){
-        echo password_hash($pass, PASSWORD_DEFAULT);
+    public function hash_pass(Reponse $reponse,$pass){
+        $pass =  password_hash($pass, PASSWORD_DEFAULT);
+        return $this->render('pass/index.html.twig', compact('pass'));
     }
  
  }

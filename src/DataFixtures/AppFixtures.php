@@ -6,6 +6,7 @@ use App\Entity\Actu;
 use App\Entity\Menu;
 use App\Entity\Question;
 use App\Entity\Reponse;
+use App\Entity\Role;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -14,34 +15,55 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+
+        $role1 = new Role();
+        $role1->setLabel('ROLE_ADMIN_PROF');
+        $manager->persist($role1);
+
+        $role2 = new Role();
+        $role2->setLabel('ROLE_ADMIN_MAIRIE');
+        $manager->persist($role2);
+
+        $role3 = new Role();
+        $role3->setLabel('ROLE_ADMIN_PARENT');
+        $manager->persist($role3);
+        
+        $role4 = new Role();
+        $role4->setLabel('ROLE_ADMIN_CONSEIL');
+        $manager->persist($role4);
+        
+        $role5 = new Role();
+        $role5->setLabel('ROLE_ADMIN_MASTER');
+        $manager->persist($role5);
+
         $utilisateur1 = new Utilisateur();
-        $utilisateur1->setUsername('christian')
-                        ->setPassword('password')
-                        ->setRoles('ROLE_USER_PROF');
+        $utilisateur1->setUsername('Christian')
+                        ->setPassword('Christian')
+                        ->setRoles($role1);
         $manager->persist($utilisateur1);
 
         $utilisateur2 = new Utilisateur();
         $utilisateur2->setUsername('Sylvie')
-                        ->setPassword('mdp_mairie')
-                        ->setRoles('ROLE_USER_MAIRIE');
+                        ->setPassword('Sylvie')
+                        ->setRoles($role2);
         $manager->persist($utilisateur2);
 
         $utilisateur3 = new Utilisateur();
         $utilisateur3->setUsername('David')
-                        ->setPassword('mdp_parent')
-                        ->setRoles('ROLE_USER_PARENT');
+                        ->setPassword('David')
+                        ->setRoles($role3);
         $manager->persist($utilisateur3);
 
         $utilisateur4 = new Utilisateur();
         $utilisateur4->setUsername('Nolwenn')
-                        ->setPassword('password_conseil')
-                        ->setRoles('ROLE_USER_CONSEIL');
+                        ->setPassword('Nolwenn')
+                        ->setRoles($role4);
         $manager->persist($utilisateur4);
 
         $utilisateur5 = new Utilisateur();
         $utilisateur5->setUsername('sylvain')
-                        ->setPassword('$2y$10$B8OR9qEX5j3lY5Fg/5lWEO8o64kZmbxi4w3x4nF9SWd7QdORrwKi2')
-                        ->setRoles('ROLE_ADMIN');
+                        ->setPassword('afpa')
+                        ->setRoles($role5);
         $manager->persist($utilisateur5);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

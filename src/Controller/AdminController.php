@@ -11,6 +11,8 @@ use App\Entity\Reponse;
 use App\Entity\Question;
 use App\Form\ContactType;
 use App\Form\QuestionType;
+use App\Entity\Utilisateur;
+use App\Form\UtilisateurType;
 use App\Repository\ActuRepository;
 use App\Repository\MenuRepository;
 use App\Repository\ContactRepository;
@@ -61,10 +63,10 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             switch($this->getUser()->getRoles()[0]){
-                case 'ROLE_ADMIN': 
+                case 'ROLE_ADMIN_MASTER': 
                     $categorie = 'prof';
                     break;
-                case 'ROLE_USER_PROF':
+                case 'ROLE_ADMIN_PROF':
                     $categorie = 'prof';
                     break;
             };
@@ -572,6 +574,27 @@ class AdminController extends AbstractController
            $this->addFlash('success',"L'action a été effectuée");
            return $this->redirectToRoute("admin_infos_pratiques");
        }
-}
+    }
+    /**
+     *@Route("/creationAdmin", name="creationAdmin")
+    */
+    public function creationAdmin(Request $request,EntityManagerInterface $em)
+    {
+        $utilisateur = new Utilisateur();
+        $form=$this->createForm(UtilisateurType::class,$utilisateur);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($utilisateur);
+            $em->flush();
+            $this->addFlash('success',"Utilisateur créé avec succès");
+            return $this->redirectToRoute("creationAdmin");
+        }
+        
+        return $this->render('infos_pratiques/admin.html.twig',[
+            'form' => $form->createView(),
+            "ROLE_ADMIN" =>true
+        ]);
+        return $this->render('admin/creationAdmin.html.twig');
+    }
 }
 
